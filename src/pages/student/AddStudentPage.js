@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
-import AddCourse from 'src/components/course/AddCourse';
+import AddStudent from 'src/components/student/AddStudent';
 
-const AddCoursePage = () => (
+const AddStudentPage = () => (
   <>
     <Helmet>
       <title>profile</title>
@@ -17,7 +17,7 @@ const AddCoursePage = () => (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={8} md={6} xs={12}>
-            <AddCourse />
+            <AddStudent />
           </Grid>
         </Grid>
       </Container>
@@ -25,4 +25,4 @@ const AddCoursePage = () => (
   </>
 );
 
-export default AddCoursePage;
+export default AddStudentPage;
