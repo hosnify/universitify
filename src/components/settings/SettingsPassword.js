@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   Box,
   Button,
@@ -8,8 +8,12 @@ import {
   Divider,
   TextField
 } from '@material-ui/core';
+import { updateStudentPassword } from '../../API/studentAPI';
+import { UserContext } from '../../API/auth';
 
 const SettingsPassword = (props) => {
+  const { user } = useContext(UserContext);
+
   const [values, setValues] = useState({
     password: '',
     confirm: ''
@@ -21,14 +25,15 @@ const SettingsPassword = (props) => {
       [event.target.name]: event.target.value
     });
   };
-
+  const handleChangePassword = () => {
+    if (user && user.role === 'student') {
+      updateStudentPassword(user.id, values.password);
+    }
+  };
   return (
     <form {...props}>
       <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -63,6 +68,7 @@ const SettingsPassword = (props) => {
           <Button
             color="primary"
             variant="contained"
+            onClick={handleChangePassword}
           >
             Update
           </Button>

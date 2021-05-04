@@ -32,6 +32,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 required
                 value={user.fname}
                 variant="outlined"
@@ -45,6 +48,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 required
                 value={user.lname}
                 variant="outlined"
@@ -57,6 +63,9 @@ const StudentProfileDetails = (props) => {
                 name="email"
                 InputProps={{
                   readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 required
                 value={user.email}
@@ -72,6 +81,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 type="number"
                 value={user.level}
                 variant="outlined"
@@ -83,6 +95,9 @@ const StudentProfileDetails = (props) => {
                 label="Current Semester"
                 InputProps={{
                   readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 name="semester"
                 required
@@ -98,6 +113,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 type="number"
                 value={user.creditDone}
                 variant="outlined"
@@ -110,6 +128,9 @@ const StudentProfileDetails = (props) => {
                 name="creditHave"
                 InputProps={{
                   readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 type="number"
                 value={user.creditHave}
@@ -125,6 +146,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 type="number"
                 value={user.GPA}
                 variant="outlined"
@@ -137,6 +161,9 @@ const StudentProfileDetails = (props) => {
                 name="lastTermGPA"
                 InputProps={{
                   readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 type="number"
                 value={user.lastTermGPA}

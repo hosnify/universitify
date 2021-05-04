@@ -37,6 +37,16 @@ export const updateStudentSupervisor = (id, supervisorid) =>
     }
   }).then((res) => res.json());
 
+export const updateStudentPassword = (id, password) =>
+  fetch(`${api}/student/${id}/password`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ password })
+  }).then((res) => res.json());
+
 export const updateStudentFinishedCourses = (id, finishedCoursesIDs) =>
   fetch(`${api}/student/${id}/finishedcourses`, {
     method: 'PUT',

@@ -74,7 +74,9 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                 .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
                 .map((enrollmentData) => (
                   <TableRow hover key={enrollmentData.id}>
-                    <TableCell>{enrollmentData.createdAt}</TableCell>
+                    <TableCell>
+                      {enrollmentData.createdAt.toString().slice(0, 10)}
+                    </TableCell>
                     <TableCell>
                       <Box
                         sx={{
@@ -88,7 +90,9 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                       </Box>
                     </TableCell>
                     <TableCell>{enrollmentData.course.name}</TableCell>
-                    <TableCell>{enrollmentData.updatedAt}</TableCell>
+                    <TableCell>
+                      {enrollmentData.updatedAt.toString().slice(0, 10)}
+                    </TableCell>
                     <TableCell>
                       {enrollmentData.supervisor
                         ? `DR. ${enrollmentData.supervisor.fname} ${enrollmentData.supervisor.lname}`

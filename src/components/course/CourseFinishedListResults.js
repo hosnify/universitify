@@ -99,7 +99,7 @@ const CourseFinishedListResults = ({ ...props }) => {
                           icon={<ReportIcon />}
                           label="Fail"
                           clickable
-                          color="primary"
+                          color="secondary"
                           variant="outlined"
                         />
                       ) : (
