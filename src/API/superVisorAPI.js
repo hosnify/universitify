@@ -36,6 +36,16 @@ export const updateSuperVisor = (id, supervisor) =>
     }
   }).then((res) => res.json());
 
+export const updateSupervisorPassword = (id, password) =>
+  fetch(`${api}/supervisor/${id}/password`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ password })
+  }).then((res) => res.json());
+
 export const deleteSuperVisor = (id) =>
   fetch(`${api}/supervisor/${id}`, {
     method: 'DELETE',

@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -8,7 +9,10 @@ import {
   Divider,
   TextField
 } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
+
 import { updateStudentPassword } from '../../API/studentAPI';
+import { updateSupervisorPassword } from '../../API/superVisorAPI';
 import { UserContext } from '../../API/auth';
 
 const SettingsPassword = (props) => {
@@ -18,7 +22,7 @@ const SettingsPassword = (props) => {
     password: '',
     confirm: ''
   });
-
+  const [open, setOpen] = useState(false);
   const handleChange = (event) => {
     setValues({
       ...values,
@@ -28,8 +32,19 @@ const SettingsPassword = (props) => {
   const handleChangePassword = () => {
     if (user && user.role === 'student') {
       updateStudentPassword(user.id, values.password);
+    } else {
+      updateSupervisorPassword(user.id, values.password);
     }
+    setOpen(true);
   };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <form {...props}>
       <Card>
@@ -72,6 +87,11 @@ const SettingsPassword = (props) => {
           >
             Update
           </Button>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              success: Password Changed
+            </Alert>
+          </Snackbar>
         </Box>
       </Card>
     </form>

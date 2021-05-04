@@ -1,7 +1,5 @@
 import { useContext } from 'react';
 import {
-  Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,7 +7,7 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
-
+import SettingsPassword from 'src/components/settings/SettingsPassword';
 import { UserContext } from '../../../API/auth';
 
 const SuperVisorProfileDetails = (props) => {
@@ -28,7 +26,12 @@ const SuperVisorProfileDetails = (props) => {
                 helperText="Please specify the first name"
                 label="First name"
                 name="fname"
-                // onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 required
                 value={user.fname}
                 variant="outlined"
@@ -39,7 +42,12 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 label="Last name"
                 name="lname"
-                // onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 required
                 value={user.lname}
                 variant="outlined"
@@ -50,7 +58,12 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 label="Email Address"
                 name="email"
-                // onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 required
                 value={user.email}
                 variant="outlined"
@@ -61,7 +74,12 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 label="Phone Number"
                 name="phone"
-                // onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 type="number"
                 value={user.phone}
                 variant="outlined"
@@ -70,17 +88,7 @@ const SuperVisorProfileDetails = (props) => {
           </Grid>
         </CardContent>
         <Divider />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
-          }}
-        >
-          <Button color="primary" variant="contained">
-            Save details
-          </Button>
-        </Box>
+        <SettingsPassword />
       </Card>
     </form>
   );
