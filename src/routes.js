@@ -19,6 +19,7 @@ import CourseRegistration from './pages/course/CourseRegistration';
 import CourseFinished from './pages/course/CourseFinished';
 import StudentAccount from './pages/student/StudentAccount';
 import AddStudentPage from './pages/student/AddStudentPage';
+import AddSuperVisorPage from './pages/supervisor/AddSuperVisorPage';
 
 // isSigned = true;
 const routes = (user) => [
@@ -78,7 +79,7 @@ const routes = (user) => [
       },
       {
         path: 'supervisor/add',
-        element: user ? <AddStudentPage /> : <Navigate to="/login" />
+        element: user ? <AddSuperVisorPage /> : <Navigate to="/login" />
       },
       {
         path: 'planahead',

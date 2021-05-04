@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -7,12 +8,15 @@ import {
   CardHeader,
   Divider,
   Grid,
+  Snackbar,
   TextField
 } from '@material-ui/core';
+import { createOne } from 'src/API/studentAPI';
 import SettingsPassword from '../settings/SettingsPassword';
 
 const AddStudent = (props) => {
   const [values, setValues] = useState({});
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
     setValues({
@@ -20,7 +24,16 @@ const AddStudent = (props) => {
       [event.target.name]: event.target.value
     });
   };
+  const handleAdd = () => {
+    createOne(values).then(setOpen(true));
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setOpen(false);
+  };
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
@@ -133,9 +146,14 @@ const AddStudent = (props) => {
             p: 2
           }}
         >
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={handleAdd}>
             Add
           </Button>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              success: Student created
+            </Alert>
+          </Snackbar>
         </Box>
         <Divider />
         <SettingsPassword />

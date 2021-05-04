@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
-import { AddSuperVisor } from '../../components/superVisor/AddSupervisor';
+import AddSuperVisor from 'src/components/superVisor/AddSupervisor';
 
 const AddSuperVisorPage = () => (
   <>

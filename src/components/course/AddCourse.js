@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -7,20 +8,14 @@ import {
   CardHeader,
   Divider,
   Grid,
+  Snackbar,
   TextField
 } from '@material-ui/core';
+import { createOne } from 'src/API/courseAPI';
 
 const AddCourse = (props) => {
-  const [values, setValues] = useState({
-    courseTitle: 'introduction to computer',
-    discreption: 'introduction to computer programing and operating system',
-    code: 'CS50',
-    instructor: 'adam ',
-    credit: '3',
-    level: '3',
-    major: 'computer',
-    prerequisites: 'cs31,cs41'
-  });
+  const [values, setValues] = useState({});
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
     setValues({
@@ -29,6 +24,16 @@ const AddCourse = (props) => {
     });
   };
 
+  const handleAdd = () => {
+    createOne({ ...values, prerequisites: null }).then(setOpen(true));
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
@@ -44,7 +49,6 @@ const AddCourse = (props) => {
                 name="Title"
                 onChange={handleChange}
                 required
-                placeholder={values.courseTitle}
                 variant="outlined"
               />
             </Grid>
@@ -55,7 +59,6 @@ const AddCourse = (props) => {
                 name="discreption"
                 onChange={handleChange}
                 required
-                placeholder={values.discreption}
                 variant="outlined"
               />
             </Grid>
@@ -66,7 +69,6 @@ const AddCourse = (props) => {
                 name="Major"
                 onChange={handleChange}
                 required
-                placeholder={values.major}
                 variant="outlined"
               />
             </Grid>
@@ -77,7 +79,6 @@ const AddCourse = (props) => {
                 name="Level"
                 onChange={handleChange}
                 type="number"
-                placeholder="1"
                 variant="outlined"
               />
             </Grid>
@@ -88,7 +89,6 @@ const AddCourse = (props) => {
                 name="instructor"
                 onChange={handleChange}
                 required
-                placeholder={values.instructor}
                 variant="outlined"
               />
             </Grid>
@@ -99,7 +99,6 @@ const AddCourse = (props) => {
                 name="credit "
                 onChange={handleChange}
                 type="number"
-                value={values.credit}
                 variant="outlined"
               />
             </Grid>
@@ -110,7 +109,6 @@ const AddCourse = (props) => {
                 name="prerequisites"
                 onChange={handleChange}
                 required
-                placeholder={values.prerequisites}
                 variant="outlined"
               />
             </Grid>
@@ -124,9 +122,14 @@ const AddCourse = (props) => {
             p: 2
           }}
         >
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={handleAdd}>
             Add
           </Button>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              success: course created
+            </Alert>
+          </Snackbar>
         </Box>
       </Card>
     </form>
