@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import SettingsPassword from '../settings/SettingsPassword';
 
-const AddCourse = (props) => {
+const AddSuperVisor = (props) => {
   const [values, setValues] = useState({});
 
   const handleChange = (event) => {
@@ -90,4 +90,4 @@ const AddCourse = (props) => {
   );
 };
 
-export default AddCourse;
+export default AddSuperVisor;
