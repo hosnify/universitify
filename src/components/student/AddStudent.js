@@ -12,16 +12,7 @@ import {
 import SettingsPassword from '../settings/SettingsPassword';
 
 const AddStudent = (props) => {
-  const [values, setValues] = useState({
-    courseTitle: 'introduction to computer',
-    discreption: 'introduction to computer programing and operating system',
-    code: 'CS50',
-    instructor: 'adam ',
-    credit: '3',
-    level: '3',
-    major: 'computer',
-    prerequisites: 'cs31,cs41'
-  });
+  const [values, setValues] = useState({});
 
   const handleChange = (event) => {
     setValues({
@@ -45,12 +36,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="First name"
                 name="fname"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 required
                 onChange={handleChange}
                 variant="outlined"
@@ -61,12 +46,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="Last name"
                 name="lname"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 required
                 onChange={handleChange}
                 variant="outlined"
@@ -77,12 +56,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="Email Address"
                 name="email"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 required
                 onChange={handleChange}
                 variant="outlined"
@@ -94,12 +67,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="Level"
                 name="Level"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 type="number"
                 onChange={handleChange}
                 variant="outlined"
@@ -109,12 +76,6 @@ const AddStudent = (props) => {
               <TextField
                 fullWidth
                 label="Current Semester"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 name="semester"
                 required
                 onChange={handleChange}
@@ -126,12 +87,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="credits Earned"
                 name="creditDone"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 type="number"
                 onChange={handleChange}
                 variant="outlined"
@@ -142,12 +97,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="credits available"
                 name="creditHave"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 type="number"
                 onChange={handleChange}
                 variant="outlined"
@@ -159,12 +108,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="GPA"
                 name="GPA"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 type="number"
                 onChange={handleChange}
                 variant="outlined"
@@ -175,12 +118,6 @@ const AddStudent = (props) => {
                 fullWidth
                 label="Last Term GPA"
                 name="lastTermGPA"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 type="number"
                 onChange={handleChange}
                 variant="outlined"

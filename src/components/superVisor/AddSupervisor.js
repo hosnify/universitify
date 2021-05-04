@@ -12,16 +12,7 @@ import {
 import SettingsPassword from '../settings/SettingsPassword';
 
 const AddCourse = (props) => {
-  const [values, setValues] = useState({
-    courseTitle: 'introduction to computer',
-    discreption: 'introduction to computer programing and operating system',
-    code: 'CS50',
-    instructor: 'adam ',
-    credit: '3',
-    level: '3',
-    major: 'computer',
-    prerequisites: 'cs31,cs41'
-  });
+  const [values, setValues] = useState({});
 
   const handleChange = (event) => {
     setValues({
