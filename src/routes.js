@@ -77,6 +77,10 @@ const routes = (user) => [
         element: user ? <SupervisorList /> : <Navigate to="/login" />
       },
       {
+        path: 'supervisor/add',
+        element: user ? <AddStudentPage /> : <Navigate to="/login" />
+      },
+      {
         path: 'planahead',
         element: user ? <PlanAheadPage /> : <Navigate to="/login" />
       },

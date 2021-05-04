@@ -9,6 +9,7 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import SettingsPassword from '../settings/SettingsPassword';
 
 const AddCourse = (props) => {
   const [values, setValues] = useState({
@@ -32,85 +33,48 @@ const AddCourse = (props) => {
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader subheader="" title="Add New Course" />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the Course title"
-                label="Title"
-                name="Title"
-                onChange={handleChange}
+                helperText="Please specify the first name"
+                label="First name"
+                name="fname"
                 required
-                placeholder={values.courseTitle}
+                onChange={handleChange}
                 variant="outlined"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="discreption"
-                name="discreption"
-                onChange={handleChange}
+                label="Last name"
+                name="lname"
                 required
-                placeholder={values.discreption}
+                onChange={handleChange}
                 variant="outlined"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Major"
-                name="Major"
-                onChange={handleChange}
+                label="Email Address"
+                name="email"
                 required
-                placeholder={values.major}
+                onChange={handleChange}
                 variant="outlined"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Level"
-                name="Level"
-                onChange={handleChange}
+                label="Phone Number"
+                name="phone"
                 type="number"
-                placeholder="1"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="instructor"
-                name="instructor"
                 onChange={handleChange}
-                required
-                placeholder={values.instructor}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="credits "
-                name="credit "
-                onChange={handleChange}
-                type="number"
-                value={values.credit}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="prerequisites"
-                name="prerequisites"
-                onChange={handleChange}
-                required
-                placeholder={values.prerequisites}
                 variant="outlined"
               />
             </Grid>
@@ -128,6 +92,8 @@ const AddCourse = (props) => {
             Add
           </Button>
         </Box>
+        <Divider />
+        <SettingsPassword />
       </Card>
     </form>
   );
