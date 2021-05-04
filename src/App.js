@@ -10,9 +10,9 @@ import { useState } from 'react';
 import { UserContext } from './API/auth';
 
 const App = () => {
-  const routing = useRoutes(routes);
-
   const [user, setUser] = useState(null);
+  const routing = useRoutes(routes(user));
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <ThemeProvider theme={theme}>

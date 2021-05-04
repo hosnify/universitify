@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/components/DashboardLayout';
 import MainLayout from 'src/components/MainLayout';
@@ -19,29 +20,71 @@ import CourseFinished from './pages/course/CourseFinished';
 import StudentAccount from './pages/student/StudentAccount';
 
 // isSigned = true;
-const routes = [
+const routes = (user) => [
   {
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'supervisor/account', element: <SuperVisorAccount /> },
-      { path: 'student/account', element: <StudentAccount /> },
-      { path: 'students', element: <StudentList /> },
-      { path: 'courses', element: <CourseList /> },
-      { path: 'course/add', element: <AddCoursePage /> },
-      { path: 'course/:id', element: <CourseDetailsPage /> },
-      { path: 'registration', element: <CourseRegistration /> },
-      { path: 'student/Courses', element: <CourseFinished /> },
+      {
+        path: 'supervisor/account',
+        element: user ? <SuperVisorAccount /> : <Navigate to="/login" />
+      },
+      {
+        path: 'student/account',
+        element: user ? <StudentAccount /> : <Navigate to="/login" />
+      },
+      {
+        path: 'students',
+        element: user ? <StudentList /> : <Navigate to="/login" />
+      },
+      {
+        path: 'courses',
+        element: user ? <CourseList /> : <Navigate to="/login" />
+      },
+      {
+        path: 'course/add',
+        element: user ? <AddCoursePage /> : <Navigate to="/login" />
+      },
+      {
+        path: 'course/:id',
+        element: user ? <CourseDetailsPage /> : <Navigate to="/login" />
+      },
+      {
+        path: 'registration',
+        element: user ? <CourseRegistration /> : <Navigate to="/login" />
+      },
+      {
+        path: 'student/Courses',
+        element: user ? <CourseFinished /> : <Navigate to="/login" />
+      },
 
-      { path: 'enrollments', element: <EnrollmentList /> },
-      { path: 'student/enrollments', element: <StudentEnrollmentList /> },
+      {
+        path: 'enrollments',
+        element: user ? <EnrollmentList /> : <Navigate to="/login" />
+      },
+      {
+        path: 'student/enrollments',
+        element: user ? <StudentEnrollmentList /> : <Navigate to="/login" />
+      },
 
-      { path: 'supervisors', element: <SupervisorList /> },
-      { path: 'planahead', element: <PlanAheadPage /> },
+      {
+        path: 'supervisors',
+        element: user ? <SupervisorList /> : <Navigate to="/login" />
+      },
+      {
+        path: 'planahead',
+        element: user ? <PlanAheadPage /> : <Navigate to="/login" />
+      },
 
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'settings', element: <Settings /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      {
+        path: 'dashboard',
+        element: user ? <Dashboard /> : <Navigate to="/login" />
+      },
+      {
+        path: 'settings',
+        element: user ? <Settings /> : <Navigate to="/login" />
+      },
+      { path: '*', element: <Navigate to="/login" /> }
     ]
   },
   {
@@ -50,8 +93,17 @@ const routes = [
     children: [
       { path: 'login', element: <Login /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="app/student/enrollments" /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      {
+        path: '/',
+        element: !user ? (
+          <Navigate to="/login" />
+        ) : user.role === 'student' ? (
+          <Navigate to="app/student/account" />
+        ) : (
+          <Navigate to="app/supervisor/account" />
+        )
+      },
+      { path: '*', element: <Navigate to="/login" /> }
     ]
   }
 ];

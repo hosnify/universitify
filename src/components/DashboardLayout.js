@@ -1,9 +1,8 @@
-import { useState, useContext, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
-import { UserContext } from '../API/auth';
 
 const DashboardLayoutRoot = experimentalStyled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default
@@ -37,15 +36,7 @@ const DashboardLayoutContent = experimentalStyled('div')({
 
 const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const { user, setUser } = useContext(UserContext);
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, []);
+
   return (
     <DashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />

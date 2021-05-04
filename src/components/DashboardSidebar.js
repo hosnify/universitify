@@ -3,7 +3,7 @@
 // eslint-disable-next-line camelcase
 
 import { useEffect, useContext } from 'react';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -19,35 +19,19 @@ import {
   User as UserIcon,
   Users as UsersIcon
 } from 'react-feather';
-import { getStudent } from 'src/API/studentAPI';
 import NavItem from './NavItem';
 import { UserContext } from '../API/auth';
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
 
-  // eslint-disable-next-line no-unused-vars
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, []);
-  useEffect(() => {
-    if (user && user.role === 'student') {
-      getStudent(user.id).then((userData) => {
-        setUser({ role: 'student', ...userData });
-      });
-    }
-  }, []);
 
   const items =
     !!user && user.role === 'student'

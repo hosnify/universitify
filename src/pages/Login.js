@@ -12,6 +12,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { getStudent } from 'src/API/studentAPI';
+import { getSuperVisor } from 'src/API/superVisorAPI';
 import { currentUser, login, UserContext } from '../API/auth';
 
 const Login = () => {
@@ -52,7 +54,15 @@ const Login = () => {
                 localStorage.setItem('token', token);
                 const currentuser = currentUser();
                 setUser(currentuser);
-
+                if (currentuser && currentuser.role === 'student') {
+                  getStudent(currentuser.id).then((userData) => {
+                    setUser({ role: 'student', ...userData });
+                  });
+                } else {
+                  getSuperVisor(currentuser.id).then((userData) => {
+                    setUser({ role: 'supervisor', ...userData });
+                  });
+                }
                 currentuser.role === 'student'
                   ? navigate('/app/student/account')
                   : navigate('/app/supervisor/account');

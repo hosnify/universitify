@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import {
   Box,
   Button,
@@ -10,37 +10,10 @@ import {
   TextField
 } from '@material-ui/core';
 
-// const states = [
-//   {
-//     value: 'alabama',
-//     label: 'Alabama'
-//   },
-//   {
-//     value: 'new-york',
-//     label: 'New York'
-//   },
-//   {
-//     value: 'san-francisco',
-//     label: 'San Francisco'
-//   }
-// ];
+import { UserContext } from '../../../API/auth';
 
 const SuperVisorProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Glalet',
-    lastName: 'el2adr',
-    email: 'glalet@eladr.io',
-    phone: '010000000',
-    state: 'cairo',
-    country: 'egypt'
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <form autoComplete="off" noValidate {...props}>
@@ -54,10 +27,10 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 helperText="Please specify the first name"
                 label="First name"
-                name="firstName"
-                onChange={handleChange}
+                name="fname"
+                // onChange={handleChange}
                 required
-                value={values.firstName}
+                value={user.fname}
                 variant="outlined"
               />
             </Grid>
@@ -65,10 +38,10 @@ const SuperVisorProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="Last name"
-                name="lastName"
-                onChange={handleChange}
+                name="lname"
+                // onChange={handleChange}
                 required
-                value={values.lastName}
+                value={user.lname}
                 variant="outlined"
               />
             </Grid>
@@ -77,9 +50,9 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 label="Email Address"
                 name="email"
-                onChange={handleChange}
+                // onChange={handleChange}
                 required
-                value={values.email}
+                value={user.email}
                 variant="outlined"
               />
             </Grid>
@@ -88,32 +61,12 @@ const SuperVisorProfileDetails = (props) => {
                 fullWidth
                 label="Phone Number"
                 name="phone"
-                onChange={handleChange}
+                // onChange={handleChange}
                 type="number"
-                value={values.phone}
+                value={user.phone}
                 variant="outlined"
               />
             </Grid>
-
-            {/* <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true, readOnly: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid> */}
           </Grid>
         </CardContent>
         <Divider />
