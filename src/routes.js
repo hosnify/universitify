@@ -18,6 +18,7 @@ import StudentEnrollmentList from './pages/enrollments/StudentEnrollmentsList';
 import CourseRegistration from './pages/course/CourseRegistration';
 import CourseFinished from './pages/course/CourseFinished';
 import StudentAccount from './pages/student/StudentAccount';
+import AddStudentPage from './pages/student/AddStudentPage';
 
 // isSigned = true;
 const routes = (user) => [
@@ -36,6 +37,10 @@ const routes = (user) => [
       {
         path: 'students',
         element: user ? <StudentList /> : <Navigate to="/login" />
+      },
+      {
+        path: 'student/add',
+        element: user ? <AddStudentPage /> : <Navigate to="/login" />
       },
       {
         path: 'courses',
