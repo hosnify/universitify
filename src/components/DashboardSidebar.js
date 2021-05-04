@@ -53,7 +53,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     !!user && user.role === 'student'
       ? [
           {
-            href: '/app/account',
+            href: '/app/student/account',
             icon: UserIcon,
             title: 'Profile'
           },
@@ -63,19 +63,19 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             title: 'Registration'
           },
           {
-            href: '/app/finishedCourses',
+            href: '/app/student/Courses',
             icon: UsersIcon,
             title: 'My Courses'
           },
           {
-            href: '/app/enrollments',
+            href: '/app/student/enrollments',
             icon: ShoppingBagIcon,
-            title: 'Enrollments'
+            title: 'My Enrollments'
           }
         ]
       : [
           {
-            href: '/app/account',
+            href: '/app/supervisor/account',
             icon: UserIcon,
             title: 'Profile'
           },
@@ -126,7 +126,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           justifyItems: 'center',
 
           p: 2,
-          gap: 3
+          gap: 2
         }}
       >
         <Avatar
@@ -141,7 +141,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h4">
-          {!!user && user.name}
+          {!!user && `${user.fname} ${user.lname}`}
         </Typography>
         <Typography color="GrayText" variant="h6">
           {`level ${!!user && user.level}`}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { useContext } from 'react';
 
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +52,10 @@ const Login = () => {
                 localStorage.setItem('token', token);
                 const currentuser = currentUser();
                 setUser(currentuser);
-                navigate('/app/account');
+
+                currentuser.role === 'student'
+                  ? navigate('/app/student/account')
+                  : navigate('/app/supervisor/account');
               } catch (error) {
                 alert('wrong email or password');
                 console.error(error);

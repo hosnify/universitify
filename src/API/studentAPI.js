@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 const api = 'http://localhost:8888';
 
@@ -59,4 +60,6 @@ export const getCoursesFinishedByStudent = (id) =>
   fetch(`${api}/student/${id}/courses`, { headers }).then((res) => res.json());
 
 export const getEnrollmentByStudent = (id) =>
-  fetch(`${api}/student/${id}/courses`, { headers }).then((res) => res.json());
+  fetch(`${api}/student/${id}/enrollments`, { headers }).then((res) =>
+    res.json()
+  );

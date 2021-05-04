@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 
-import CourseFinishedListResults from 'src/components/course/CourseFinishedListResults';
+import CourseRegistrationListResults from 'src/components/course/CourseRegistrationListResults';
 
-const CourseFinished = () => (
+const CourseRegistration = () => (
   <>
     <Helmet>
       <title>Course Registration</title>
@@ -17,11 +17,11 @@ const CourseFinished = () => (
     >
       <Container maxWidth={false}>
         <Box sx={{ pt: 3 }}>
-          <CourseFinishedListResults />
+          <CourseRegistrationListResults />
         </Box>
       </Container>
     </Box>
   </>
 );
 
-export default CourseFinished;
+export default CourseRegistration;

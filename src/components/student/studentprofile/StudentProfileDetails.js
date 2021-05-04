@@ -1,7 +1,5 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import {
-  Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,55 +7,33 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import SettingsPassword from 'src/components/settings/SettingsPassword';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
+import { UserContext } from '../../../API/auth';
 
 const StudentProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Glalet',
-    lastName: 'el2adr',
-    email: 'glalet@eladr.io',
-    phone: '010000000',
-    state: 'cairo',
-    country: 'egypt'
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
+        <CardHeader
+          subheader="The information can not be edited by student"
+          title="Profile"
+        />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
                 label="First name"
-                name="firstName"
-                onChange={handleChange}
+                name="fname"
+                InputProps={{
+                  readOnly: true
+                }}
                 required
-                value={values.firstName}
+                value={user.fname}
                 variant="outlined"
               />
             </Grid>
@@ -65,10 +41,12 @@ const StudentProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="Last name"
-                name="lastName"
-                onChange={handleChange}
+                name="lname"
+                InputProps={{
+                  readOnly: true
+                }}
                 required
-                value={values.lastName}
+                value={user.lname}
                 variant="outlined"
               />
             </Grid>
@@ -77,31 +55,25 @@ const StudentProfileDetails = (props) => {
                 fullWidth
                 label="Email Address"
                 name="email"
-                onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
                 required
-                value={values.email}
+                value={user.email}
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
+
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Level"
                 name="Level"
-                onChange={handleChange}
+                InputProps={{
+                  readOnly: true
+                }}
                 type="number"
-                value="1"
+                value={user.level}
                 variant="outlined"
               />
             </Grid>
@@ -112,10 +84,9 @@ const StudentProfileDetails = (props) => {
                 InputProps={{
                   readOnly: true
                 }}
-                name="Current Semester"
-                onChange={handleChange}
+                name="semester"
                 required
-                value="fall 2020"
+                value={user.semester}
                 variant="outlined"
               />
             </Grid>
@@ -123,10 +94,12 @@ const StudentProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="credits Earned"
-                name="credit Earned"
-                onChange={handleChange}
+                name="creditDone"
+                InputProps={{
+                  readOnly: true
+                }}
                 type="number"
-                value="1"
+                value={user.creditDone}
                 variant="outlined"
               />
             </Grid>
@@ -134,10 +107,12 @@ const StudentProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="credits available"
-                name="Level"
-                onChange={handleChange}
+                name="creditHave"
+                InputProps={{
+                  readOnly: true
+                }}
                 type="number"
-                value="1"
+                value={user.creditHave}
                 variant="outlined"
                 helperText="for current semester"
               />
@@ -145,36 +120,33 @@ const StudentProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true, readOnly: true }}
-                value={values.state}
+                label="GPA"
+                name="GPA"
+                InputProps={{
+                  readOnly: true
+                }}
+                type="number"
+                value={user.GPA}
                 variant="outlined"
-              >
-                {states.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Last Term GPA"
+                name="lastTermGPA"
+                InputProps={{
+                  readOnly: true
+                }}
+                type="number"
+                value={user.lastTermGPA}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
-          }}
-        >
-          <Button color="primary" variant="contained">
-            Save details
-          </Button>
-        </Box>
+        <SettingsPassword />
       </Card>
     </form>
   );
