@@ -115,7 +115,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src="/static/images/avatars/glalet.png"
+          src="/static/images/avatars/avatar_4.png"
           variant="circular"
           sx={{
             cursor: 'pointer',
