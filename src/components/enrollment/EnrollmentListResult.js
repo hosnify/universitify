@@ -105,8 +105,12 @@ const EnrollmentListResults = () => {
                     <TableCell>{enrollmentData.isAproved.toString()}</TableCell>
 
                     <TableCell>
-                      <Button primary> Approve </Button>
-                      <Button color="secondary"> reject </Button>
+                      <Button primary variant="outlined">
+                        Approve
+                      </Button>
+                      <Button color="secondary" variant="outlined">
+                        reject
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

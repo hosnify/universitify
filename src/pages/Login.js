@@ -63,9 +63,7 @@ const Login = () => {
                     setUser({ role: 'supervisor', ...userData });
                   });
                 }
-                currentuser.role === 'student'
-                  ? navigate('/app/student/account')
-                  : navigate('/app/supervisor/account');
+                navigate(`/app/${currentuser.role}/${currentuser.id}/account`);
               } catch (error) {
                 alert('wrong email or password');
                 console.error(error);

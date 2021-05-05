@@ -35,10 +35,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   }, [location.pathname]);
 
   const items =
-    !!user && user.role === 'student'
+    user && user.role === 'student'
       ? [
           {
-            href: '/app/student/account',
+            href: `/app/student/${user.id}/account`,
             icon: AccountCircleIcon,
             title: 'Profile'
           },
@@ -48,19 +48,19 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             title: 'Registration'
           },
           {
-            href: '/app/student/Courses',
+            href: `/app/student/${user.id}/Courses`,
             icon: CardMembershipIcon,
             title: 'My Courses'
           },
           {
-            href: '/app/student/enrollments',
+            href: `/app/student/${user.id}/enrollments`,
             icon: LibraryBooksIcon,
             title: 'My Enrollments'
           }
         ]
       : [
           {
-            href: '/app/supervisor/account',
+            href: `/app/supervisor/${user.id}/account`,
             icon: AccountCircleIcon,
             title: 'Profile'
           },

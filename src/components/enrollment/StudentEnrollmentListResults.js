@@ -7,6 +7,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   // Avatar,
   Box,
+  Button,
   Card,
   Chip,
   Table,
@@ -54,7 +55,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
     'course  ',
     'last update at',
     'Supervisor',
-    'status'
+    'status',
+    user.role === 'supervisor' && 'action'
   ];
 
   return (
@@ -107,6 +109,16 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                         variant="outlined"
                       />
                     </TableCell>
+                    {user.role === 'supervisor' && (
+                      <TableCell>
+                        <Button primary variant="outlined">
+                          Approve
+                        </Button>
+                        <Button color="secondary" variant="outlined">
+                          reject
+                        </Button>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
             </TableBody>

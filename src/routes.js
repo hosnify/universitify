@@ -1,4 +1,3 @@
-/* eslint-disable no-extra-boolean-cast */
 /* eslint-disable no-nested-ternary */
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/components/DashboardLayout';
@@ -7,7 +6,6 @@ import StudentList from 'src/pages/student/StudentList';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
-import Settings from 'src/pages/Settings';
 import CourseList from './pages/course/CourseList';
 import EnrollmentList from './pages/enrollments/EnrollmentList';
 import SupervisorList from './pages/supervisor/SupervisorList';
@@ -31,20 +29,24 @@ const routes = (user) => {
       element: user ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         {
-          path: 'supervisor/account',
-          element: user ? <SuperVisorAccount /> : <Navigate to="/login" />
-        },
-        {
-          path: 'student/account',
+          path: 'student/id/account',
           element: user ? <StudentAccount /> : <Navigate to="/login" />
         },
         {
           path: 'students',
-          element: !!user ? <StudentList /> : <Navigate to="/login" />
+          element: user ? <StudentList /> : <Navigate to="/login" />
         },
         {
           path: 'student/add',
           element: user ? <AddStudentPage /> : <Navigate to="/login" />
+        },
+        {
+          path: 'student/:id/Courses',
+          element: user ? <CourseFinished /> : <Navigate to="/login" />
+        },
+        {
+          path: 'student/:id/enrollments',
+          element: user ? <StudentEnrollmentList /> : <Navigate to="/login" />
         },
         {
           path: 'courses',
@@ -62,20 +64,16 @@ const routes = (user) => {
           path: 'registration',
           element: user ? <CourseRegistration /> : <Navigate to="/login" />
         },
-        {
-          path: 'student/Courses',
-          element: user ? <CourseFinished /> : <Navigate to="/login" />
-        },
 
         {
           path: 'enrollments',
           element: user ? <EnrollmentList /> : <Navigate to="/login" />
         },
-        {
-          path: 'student/enrollments',
-          element: user ? <StudentEnrollmentList /> : <Navigate to="/login" />
-        },
 
+        {
+          path: 'supervisor/:id/account',
+          element: user ? <SuperVisorAccount /> : <Navigate to="/login" />
+        },
         {
           path: 'supervisors',
           element: user ? <SupervisorList /> : <Navigate to="/login" />
@@ -93,10 +91,7 @@ const routes = (user) => {
           path: 'dashboard',
           element: user ? <Dashboard /> : <Navigate to="/login" />
         },
-        {
-          path: 'settings',
-          element: user ? <Settings /> : <Navigate to="/login" />
-        },
+
         { path: '*', element: <Navigate to="/login" /> }
       ]
     },

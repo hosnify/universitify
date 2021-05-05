@@ -87,7 +87,11 @@ const StudentListResults = ({ ...rest }) => {
                     <TableCell>
                       {studentData.coursesFinished.length.toString()}
                     </TableCell>
-                    <TableCell>TODO</TableCell>
+                    <TableCell>
+                      {studentData.enrollments
+                        .map((enrollment) => enrollment.status)
+                        .include('in review')}
+                    </TableCell>
                     <TableCell>
                       <Button primary> show </Button>
                     </TableCell>
