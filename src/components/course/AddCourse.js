@@ -25,7 +25,10 @@ const AddCourse = (props) => {
   };
 
   const handleAdd = () => {
-    createOne({ ...values, prerequisites: null }).then(setOpen(true));
+    createOne({ ...values, prerequisites: null }).then((res) => {
+      console.log(res);
+      setOpen(true);
+    });
   };
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

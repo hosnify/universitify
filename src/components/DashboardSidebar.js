@@ -110,7 +110,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           justifyItems: 'center',
 
           p: 2,
-          gap: 2
+          gap: 1
         }}
       >
         <Avatar
@@ -125,11 +125,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h4">
-          {!!user && `${user.fname} ${user.lname}`}
+          {!!user && `DR. ${user.fname} ${user.lname}`}
         </Typography>
-        <Typography color="GrayText" variant="h6">
-          {`level ${!!user && user.level}`}
-        </Typography>
+        {!!user && user.role === 'student' && (
+          <Typography color="GrayText" variant="h6">
+            {`level ${!!user && user.level}`}
+          </Typography>
+        )}
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
