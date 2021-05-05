@@ -16,7 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 // import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 // import InputIcon from '@material-ui/icons/Input';
 import { makeStyles } from '@material-ui/core/styles';
-import { Logout } from '@material-ui/icons';
+import InputIcon from '@material-ui/icons/Input';
 import { UserContext } from '../API/auth';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,9 +63,9 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton> */}
-          <Button onClick={() => logout()} color="inherit">
+          <Button onClick={() => logout()} color="inherit" variant="contained">
             log out
-            <Logout />
+            <InputIcon />
           </Button>
         </Hidden>
 

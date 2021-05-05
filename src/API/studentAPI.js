@@ -25,7 +25,7 @@ export const createOne = (student) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ student })
+    body: JSON.stringify(student)
   }).then((res) => res.json());
 
 export const updateStudentSupervisor = (id, supervisorid) =>

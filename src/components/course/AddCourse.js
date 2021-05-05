@@ -25,8 +25,8 @@ const AddCourse = (props) => {
   };
 
   const handleAdd = () => {
-    createOne({ ...values, prerequisites: null }).then((res) => {
-      console.log(res);
+    createOne({ ...values, prerequisites: null }).then(() => {
+      console.log({ ...values, prerequisites: null });
       setOpen(true);
     });
   };
@@ -49,7 +49,7 @@ const AddCourse = (props) => {
                 fullWidth
                 helperText="Please specify the Course title"
                 label="Title"
-                name="Title"
+                name="name"
                 onChange={handleChange}
                 required
                 variant="outlined"
@@ -69,7 +69,7 @@ const AddCourse = (props) => {
               <TextField
                 fullWidth
                 label="Major"
-                name="Major"
+                name="major"
                 onChange={handleChange}
                 required
                 variant="outlined"
@@ -79,27 +79,18 @@ const AddCourse = (props) => {
               <TextField
                 fullWidth
                 label="Level"
-                name="Level"
+                name="level"
                 onChange={handleChange}
                 type="number"
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="instructor"
-                name="instructor"
-                onChange={handleChange}
-                required
-                variant="outlined"
-              />
-            </Grid>
+
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="credits "
-                name="credit "
+                name="credit"
                 onChange={handleChange}
                 type="number"
                 variant="outlined"

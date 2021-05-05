@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   Alert,
   Box,
@@ -13,10 +13,12 @@ import {
 } from '@material-ui/core';
 import { createOne } from 'src/API/studentAPI';
 import SettingsPassword from '../settings/SettingsPassword';
+import { UserContext } from '../../API/auth';
 
 const AddStudent = (props) => {
   const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleChange = (event) => {
     setValues({
@@ -25,7 +27,10 @@ const AddStudent = (props) => {
     });
   };
   const handleAdd = () => {
-    createOne(values).then(setOpen(true));
+    createOne({ ...values, supervisorId: user.id }).then(() => {
+      console.log(values);
+      setOpen(true);
+    });
   };
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -79,7 +84,7 @@ const AddStudent = (props) => {
               <TextField
                 fullWidth
                 label="Level"
-                name="Level"
+                name="level"
                 type="number"
                 onChange={handleChange}
                 variant="outlined"

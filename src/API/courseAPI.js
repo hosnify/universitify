@@ -26,7 +26,7 @@ export const createOne = (course) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ course })
+    body: JSON.stringify(course)
   }).then((res) => res.json());
 
 export const deleteCourse = (id) =>

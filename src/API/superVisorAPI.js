@@ -24,7 +24,7 @@ export const createOne = (supervisor) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ supervisor })
+    body: JSON.stringify(supervisor)
   }).then((res) => res.json());
 
 export const updateSuperVisor = (id, supervisor) =>
