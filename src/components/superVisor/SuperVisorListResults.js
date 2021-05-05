@@ -6,7 +6,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   // Avatar,
   Box,
-  Button,
   Card,
   Table,
   TableBody,
@@ -77,15 +76,11 @@ const SuperVisorListResults = () => {
                         }}
                       >
                         <Typography color="textPrimary" variant="body1">
-                          {superVisorData.fname + superVisorData.lname}
+                          {`${superVisorData.fname} ${superVisorData.lname}`}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>{superVisorData.email}</TableCell>
-
-                    <TableCell>
-                      <Button primary> show </Button>
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

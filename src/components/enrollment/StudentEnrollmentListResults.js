@@ -35,12 +35,11 @@ const StudentEnrollmentListResults = ({ ...props }) => {
         setEnrollment(enrollmentsData.enrollments)
       );
     } else {
-      getEnrollmentByStudent(props.studentID).then((enrollmentsData) => {
+      getEnrollmentByStudent(props.id).then((enrollmentsData) => {
         setEnrollment(enrollmentsData.enrollments);
       });
     }
   }, []);
-  console.log(enrollments.enrollments);
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };

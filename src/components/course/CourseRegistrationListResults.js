@@ -141,6 +141,18 @@ const CourseRegistrationListResults = () => {
                           buttonText="show prerequisites"
                           title={`Course ${courseData.name} prerequisites :`}
                           color="primary"
+                          data={
+                            <List
+                              subheader="Prerequisites :"
+                              alignItems="flex-start"
+                            >
+                              {courseData.prerequisites.map((course) => (
+                                <ListItem divider key={course.id}>
+                                  {`Course : ${course.name} - level: ${course.level}`}
+                                </ListItem>
+                              ))}
+                            </List>
+                          }
                         />
                       ) : (
                         <AlertDialog

@@ -29,7 +29,7 @@ const routes = (user) => {
       element: user ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         {
-          path: 'student/id/account',
+          path: 'student/:id/account',
           element: user ? <StudentAccount /> : <Navigate to="/login" />
         },
         {

@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Card,
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -13,14 +14,16 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import { InfoOutlined } from '@material-ui/icons';
 import { getAllStudents } from 'src/API/studentAPI';
+import { useNavigate } from 'react-router-dom';
 // import getInitials from 'src/utils/getInitials';
 
 const StudentListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     getAllStudents().then((studentsData) => setStudents(studentsData));
   }, []);
@@ -75,14 +78,17 @@ const StudentListResults = ({ ...rest }) => {
                           {/* {getInitials(customer.name)} */}
                         </Avatar>
                         <Typography color="textPrimary" variant="body1">
-                          {studentData.fname + studentData.lname}
+                          {`${studentData.fname} ${studentData.lname}`}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>{studentData.level}</TableCell>
                     <TableCell>{studentData.major}</TableCell>
                     <TableCell>{studentData.program}</TableCell>
-                    <TableCell>{studentData.creditDone}</TableCell>
+                    <TableCell>
+                      {(studentData.coursesFinished.length * 3).toString()}
+                      {/* TODO: change with CreditHoursDone */}
+                    </TableCell>
                     <TableCell>{studentData.creditHave}</TableCell>
                     <TableCell>
                       {studentData.coursesFinished.length.toString()}
@@ -90,10 +96,27 @@ const StudentListResults = ({ ...rest }) => {
                     <TableCell>
                       {studentData.enrollments
                         .map((enrollment) => enrollment.status)
-                        .include('in review')}
+                        .includes('in review') && (
+                        <Chip
+                          icon={<InfoOutlined />}
+                          label="need review"
+                          clickable
+                          color="secondary"
+                          variant="outlined"
+                        />
+                      )}
                     </TableCell>
                     <TableCell>
-                      <Button primary> show </Button>
+                      <Button
+                        primary
+                        onClick={() => {
+                          navigate(
+                            `/app/student/${studentData.id}/enrollments`
+                          );
+                        }}
+                      >
+                        show enrollments
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

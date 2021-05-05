@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -19,35 +20,36 @@ import {
 } from '@material-ui/core';
 import {
   deleteEnrollment,
-  getAllEnrollments,
+  getAllEnrollmentsByCourseId,
   UpdateEnrollment
 } from 'src/API/enrollmentAPI';
 import { InfoOutlined } from '@material-ui/icons';
 
 import { UserContext } from '../../API/auth';
 
-const EnrollmentListResults = () => {
+const CourseEnrollmentListResult = (props) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [enrollments, setEnrollments] = useState([]);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getAllEnrollments().then((enrollmentsData) =>
-      setEnrollments(enrollmentsData)
-    );
+    getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) => {
+      console.log(enrollmentsData);
+      setEnrollments(enrollmentsData.enrollments);
+    });
   }, []);
   const handleApprove = async (id, enrollment) => {
     console.log(enrollment, id);
     await UpdateEnrollment(id, enrollment);
-    getAllEnrollments().then((enrollmentsData) =>
-      setEnrollments(enrollmentsData)
+    getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) =>
+      setEnrollments(enrollmentsData.enrollments)
     );
   };
   const handleDelete = async (id) => {
     await deleteEnrollment(id);
-    getAllEnrollments().then((enrollmentsData) =>
-      setEnrollments(enrollmentsData)
+    getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) =>
+      setEnrollments(enrollmentsData.enrollments)
     );
   };
   const handleLimitChange = (event) => {
@@ -210,4 +212,4 @@ const EnrollmentListResults = () => {
   );
 };
 
-export default EnrollmentListResults;
+export default CourseEnrollmentListResult;

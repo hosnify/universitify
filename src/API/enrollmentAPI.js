@@ -16,6 +16,9 @@ export const getEnrollment = (id) =>
 export const getAllEnrollments = () =>
   fetch(`${api}/enrollments`).then((res) => res.json());
 
+export const getAllEnrollmentsByCourseId = (id) =>
+  fetch(`${api}/course/${id}/enrollments`).then((res) => res.json());
+
 export const createOne = ({ ...enrollment }) =>
   fetch(`${api}/enrollment/`, {
     method: 'POST',
@@ -36,11 +39,11 @@ export const deleteEnrollment = (id) =>
   }).then((res) => res.json());
 
 export const UpdateEnrollment = (id, enrollment) =>
-  fetch(`${api}/student/${id}/finishedcourses`, {
+  fetch(`${api}/enrollment/${id}`, {
     method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ enrollment })
+    body: JSON.stringify(enrollment)
   }).then((res) => res.json());

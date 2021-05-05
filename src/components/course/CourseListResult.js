@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   // Avatar,
   Box,
-  Button,
   Card,
+  List,
+  ListItem,
   Table,
   TableBody,
   TableCell,
@@ -14,6 +16,8 @@ import {
   Typography
 } from '@material-ui/core';
 import { getAllCourses } from 'src/API/courseAPI';
+import AlertDialog from '../AlertDialog';
+import CourseEnrollmentListResult from '../enrollment/CourseEnrollmentListResult';
 
 // import getInitials from 'src/utils/getInitials';
 
@@ -40,11 +44,9 @@ const CourseListResults = () => {
     'level',
     'major',
     'credit',
-    'available',
     'course prerequisites',
-    'Students ',
-    'Current Enrollments',
-    'Actions'
+    // 'Students ',
+    'Current Enrollments'
   ];
 
   return (
@@ -80,20 +82,44 @@ const CourseListResults = () => {
                     <TableCell>{courseData.level}</TableCell>
                     <TableCell>{courseData.major}</TableCell>
                     <TableCell>{courseData.credit}</TableCell>
-                    <TableCell>{courseData.available}</TableCell>
                     <TableCell>
-                      <Button primary> show prerequisites </Button>
+                      <AlertDialog
+                        buttonText="show prerequisites"
+                        title={`Course ${courseData.name} prerequisites :`}
+                        color="primary"
+                        data={
+                          <List
+                            subheader="Prerequisites :"
+                            alignItems="flex-start"
+                          >
+                            {courseData.prerequisites.map((course) => (
+                              <ListItem divider key={course.id}>
+                                {`Course : ${course.name} - level: ${course.level}`}
+                              </ListItem>
+                            ))}
+                          </List>
+                        }
+                      />
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <Button primary> show students </Button>
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
-                      <Button primary> show enrollments </Button>
+                      <AlertDialog
+                        buttonText="Enrollments"
+                        title={`Course ${courseData.name} prerequisites :`}
+                        color="primary"
+                        data={
+                          <CourseEnrollmentListResult
+                            courseId={courseData.id}
+                          />
+                        }
+                      />
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <Button primary> Update Course </Button>
                       <Button color="secondary"> delete Course </Button>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
             </TableBody>
