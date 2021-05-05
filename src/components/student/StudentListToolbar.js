@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
@@ -9,21 +10,27 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Search as SearchIcon } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
 
-const StudentListToolbar = (props) => (
-  <Box {...props}>
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end'
-      }}
-    >
-      <Button color="primary" variant="contained">
-        Add New
-        <AddIcon />
-      </Button>
-    </Box>
-    <Box sx={{ mt: 3 }}>
+const StudentListToolbar = (props) => {
+  const navigate = useNavigate();
+  const handleAddButton = () => {
+    navigate('/app/student/add');
+  };
+  return (
+    <Box {...props}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}
+      >
+        <Button color="primary" variant="contained" onClick={handleAddButton}>
+          Add New
+          <AddIcon />
+        </Button>
+      </Box>
+      {/* <Box sx={{ mt: 3 }}>
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
@@ -44,8 +51,9 @@ const StudentListToolbar = (props) => (
           </Box>
         </CardContent>
       </Card>
+    </Box> */}
     </Box>
-  </Box>
-);
+  );
+};
 
 export default StudentListToolbar;

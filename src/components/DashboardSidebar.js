@@ -14,11 +14,12 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import {
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  Users as UsersIcon
-} from 'react-feather';
+import CardMembershipIcon from '@material-ui/icons/CardMembership';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 import NavItem from './NavItem';
 import { UserContext } from '../API/auth';
 
@@ -38,61 +39,66 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       ? [
           {
             href: '/app/student/account',
-            icon: UserIcon,
+            icon: AccountCircleIcon,
             title: 'Profile'
           },
           {
             href: '/app/registration',
-            icon: UsersIcon,
+            icon: LibraryAddIcon,
             title: 'Registration'
           },
           {
             href: '/app/student/Courses',
-            icon: UsersIcon,
+            icon: CardMembershipIcon,
             title: 'My Courses'
           },
           {
             href: '/app/student/enrollments',
-            icon: ShoppingBagIcon,
+            icon: LibraryBooksIcon,
             title: 'My Enrollments'
           }
         ]
       : [
           {
             href: '/app/supervisor/account',
-            icon: UserIcon,
+            icon: AccountCircleIcon,
             title: 'Profile'
           },
           {
             href: '/app/students',
-            icon: UsersIcon,
+            icon: PeopleAltIcon,
             title: 'Students'
           },
           {
             href: '/app/courses',
-            icon: UsersIcon,
+            icon: CardMembershipIcon,
             title: 'Courses'
           },
           {
             href: '/app/enrollments',
-            icon: ShoppingBagIcon,
+            icon: LibraryBooksIcon,
             title: 'Enrollments'
           },
           {
-            href: '/app/course/add',
-            icon: UserIcon,
-            title: 'Add Course'
-          },
-          {
-            href: '/app/supervisor/add',
-            icon: UserIcon,
-            title: 'Add Supervisor'
-          },
-          {
-            href: '/app/student/add',
-            icon: UserIcon,
-            title: 'Add Student'
+            href: '/app/supervisors',
+            icon: SupervisorAccountIcon,
+            title: 'Supervisors'
           }
+          // {
+          //   href: '/app/course/add',
+          //   icon: UserIcon,
+          //   title: 'Add Course'
+          // },
+          // {
+          //   href: '/app/supervisor/add',
+          //   icon: UserIcon,
+          //   title: 'Add Supervisor'
+          // },
+          // {
+          //   href: '/app/student/add',
+          //   icon: UserIcon,
+          //   title: 'Add Student'
+          // }
         ];
   const content = (
     <Box
@@ -108,21 +114,20 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyItems: 'center',
-
           p: 2,
           gap: 1
         }}
       >
         <Avatar
           component={RouterLink}
-          src="/static/images/avatars/avatar_4.png"
+          src={user.avatar}
           variant="circular"
           sx={{
             cursor: 'pointer',
             width: 64,
             height: 64
           }}
-          to="/app/account"
+          to="/"
         />
         <Typography color="textPrimary" variant="h4">
           {!!user && `DR. ${user.fname} ${user.lname}`}
@@ -134,7 +139,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         )}
       </Box>
       <Divider />
-      <Box sx={{ p: 2 }}>
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyItems: 'center',
+          p: 2,
+          gap: 1
+        }}
+      >
         <List>
           {items.map((item) => (
             <NavItem
@@ -169,7 +183,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       </Hidden>
       <Hidden lgDown>
         <Drawer
-          // style={{ overflow: 'auto', position: 'relative' }}
+          style={{ overflow: 'auto' }}
           anchor="left"
           variant="persistent"
           open
@@ -177,7 +191,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
               top: 100,
-              height: 'clac(100%-100)',
+              height: '100%',
               position: 'fixed'
             }
           }}

@@ -25,7 +25,7 @@ const SuperVisorProfile = (props) => {
           }}
         >
           <Avatar
-            src="/static/images/avatars/avatar_4.png"
+            src={user.avatar}
             sx={{
               height: 100,
               width: 100

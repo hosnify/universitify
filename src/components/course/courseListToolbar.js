@@ -1,29 +1,36 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
-  Button,
   Card,
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon
+  SvgIcon,
+  Button
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { Search as SearchIcon } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 
-const CourseListToolbar = (props) => (
-  <Box {...props}>
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end'
-      }}
-    >
-      <Button color="primary" variant="contained">
-        Add Course
-        <AddIcon />
-      </Button>
-    </Box>
-    <Box sx={{ mt: 3 }}>
+const SuperVisorListToolbar = (props) => {
+  const navigate = useNavigate();
+  const handleAddButton = () => {
+    navigate('/app/course/add');
+  };
+  return (
+    <Box {...props}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}
+      >
+        <Button color="primary" variant="contained" onClick={handleAddButton}>
+          Add course
+          <AddIcon />
+        </Button>
+      </Box>
+      {/* <Box sx={{ mt: 3 }}>
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
@@ -38,14 +45,15 @@ const CourseListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search Course"
+              placeholder="Search by supervisor name"
               variant="outlined"
             />
           </Box>
         </CardContent>
       </Card>
+    </Box> */}
     </Box>
-  </Box>
-);
+  );
+};
 
-export default CourseListToolbar;
+export default SuperVisorListToolbar;

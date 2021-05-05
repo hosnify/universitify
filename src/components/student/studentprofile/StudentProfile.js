@@ -25,6 +25,7 @@ const StudentProfile = (props) => {
           }}
         >
           <Avatar
+            src={user.avatar}
             sx={{
               height: 100,
               width: 100
