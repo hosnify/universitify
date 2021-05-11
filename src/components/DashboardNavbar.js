@@ -64,7 +64,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
             </Badge>
           </IconButton> */}
           <Button onClick={() => logout()} color="inherit" variant="contained">
-            log out
+            <Box paddingRight={2}> log out</Box>
             <InputIcon />
           </Button>
         </Hidden>

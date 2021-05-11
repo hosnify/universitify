@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
@@ -35,16 +36,17 @@ import AlertDialog from '../AlertDialog';
 
 // import getInitials from 'src/utils/getInitials';
 
-const CourseRegistrationListResults = () => {
+const CourseRegistrationListResults = ({ ...props }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
   const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     if (user) {
-      getAllCoursesByMajorAndLevel(user.major, user.level).then((coursesData) =>
-        setCourses(coursesData)
-      );
+      getAllCoursesByMajorAndLevel(
+        user.major,
+        props.level
+      ).then((coursesData) => setCourses(coursesData));
     }
   }, []);
   const isEligble = (loggeduser, inputCourse) =>
