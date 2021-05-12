@@ -11,7 +11,7 @@ import {
   Snackbar,
   TextField
 } from '@material-ui/core';
-import { createOne } from 'src/API/courseAPI';
+import { createOne, updateCoursePrerequisites } from 'src/API/courseAPI';
 
 const AddCourse = (props) => {
   const [values, setValues] = useState({});
@@ -24,17 +24,17 @@ const AddCourse = (props) => {
     });
   };
 
-  const handleAdd = () => {
-    createOne({ ...values, prerequisites: null }).then(() => {
-      console.log({ ...values, prerequisites: null });
-      setOpen(true);
+  const handleAdd = async () => {
+    const newCourse = await createOne({ ...values });
+    await updateCoursePrerequisites(newCourse.id, {
+      prerequisites: values.prerequisites.split(',')
     });
+    setOpen(true);
   };
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
   return (
@@ -99,11 +99,23 @@ const AddCourse = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
+                label="Course Code"
+                name="courseCode"
+                onChange={handleChange}
+                required
+                variant="outlined"
+                helperText="ex: MIS86 "
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
                 label="prerequisites"
                 name="prerequisites"
                 onChange={handleChange}
                 required
                 variant="outlined"
+                helperText="enter course code seperated by comma  ex: MIS86,MIS89 "
               />
             </Grid>
           </Grid>

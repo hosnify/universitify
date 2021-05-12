@@ -34,8 +34,6 @@ import { createOne as createEnrollment } from '../../API/enrollmentAPI';
 import { UserContext } from '../../API/auth';
 import AlertDialog from '../AlertDialog';
 
-// import getInitials from 'src/utils/getInitials';
-
 const CourseRegistrationListResults = ({ ...props }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -43,10 +41,9 @@ const CourseRegistrationListResults = ({ ...props }) => {
   const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     if (user) {
-      getAllCoursesByMajorAndLevel(
-        user.major,
-        props.level
-      ).then((coursesData) => setCourses(coursesData));
+      getAllCoursesByMajorAndLevel(user.major, props.level).then(
+        (coursesData) => setCourses(coursesData)
+      );
     }
   }, []);
   const isEligble = (loggeduser, inputCourse) =>

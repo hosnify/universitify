@@ -37,3 +37,15 @@ export const deleteCourse = (id) =>
       'Content-Type': 'application/json'
     }
   }).then((res) => res.json());
+
+export const updateCoursePrerequisites = (id, prerequisites) =>
+  fetch(`${api}/course/${id}/prerequisites`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(prerequisites)
+  }).then((res) => {
+    res.json();
+  });
