@@ -1,108 +1,132 @@
-## [Material Kit - React](https://material-kit-react.devias.io/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=%F0%9F%9A%A8Devias%20Freebie%20Alert%20-%20An%20awesome%20ready-to-use%20register%20page%20made%20with%20%23material%20%23react%0D%0Ahttps%3A%2F%2Fdevias.io%20%23createreactapp%20%23devias%20%23material%20%23freebie%20%40devias-io)
+## university registration system
 
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+> this is the react app client for university registration system , in which students can register university moudules , track enrollments , and course result .
 
-[![Material Kit - React](https://s3.eu-west-2.amazonaws.com/devias/products/react-material-dashboard/react-material-free-xl.jpg)](https://react-material-dashboard.devias.io/)
+## technology stack
 
-> Free React Admin Dashboard made with [Material UI's](https://material-ui.com/?ref=devias-io) components, [React](https://reactjs.org/?ref=devias-io) and of course [create-react-app](https://facebook.github.io/create-react-app/?ref=devias-io) to boost your app development process! We'll launch a pro version soon, so if you are interested subscribe to our personal emailing list on [https://devias.io/](https://devias.io/)
+> nodeJs - React - MaterialUI - express
 
-## Upgrade to PRO Version
-
-We also have a pro version of this product which bundles even more pages and components if you want to save more time and design efforts :)
-
-
-| Free Version (this one)              | [Material Kit Pro - React](https://material-ui.com/store/items/devias-kit-pro/) |
-| ------------------------ | :----------------------------------------------------------- |
-| **7** Demo Pages         | **32** demo pages
-| -                        | ✔ Dark & light mode
-| -                        | ✔ Authentication with *Amplify**, **Auth0** and **Firebase**  
-| -                        | ✔ TypeScript version                                                                                   
-| -                        | ✔ Design files (sketch & figma) - for extended license       
-| -                        | ✔ Complete users flows                                       
-
-## Demo
-
-- [Dashboard Page](https://material-kit-react.devias.io/app/dashboard)
-- [Users Page](https://material-kit-react.devias.io/app/customers)
-- [Products Page](https://material-kit-react.devias.io/app/products)
-- [Register Page](https://material-kit-react.devias.io/register)
-- [Login Page](https://material-kit-react.devias.io/login)
-- [Account Page](https://material-kit-react.devias.io/app/account)
-- [Settings Page](https://material-kit-react.devias.io/app/settings)
-
-
-## Quick start
-
-- [Download from Github](https://github.com/devias-io/material-kit-react/archive/master.zip) or [Download from Devias](https://devias.io/products/material-kit-react) or clone the repo: `git clone https://github.com/devias-io/material-kit-react.git`
-
-- Make sure your NodeJS and npm versions are up to date for `React 17`
-
-- Install dependencies: `npm install` or `yarn`
-
-- Start the server: `npm run start` or `yarn start`
-
-- Views are on: `localhost:3000`
-
-## 🖌 Design Files
-
-👉[Download Sketch file](https://s3.eu-west-2.amazonaws.com/devias/products/react-material-dashboard/react-material-dashboard-free.sketch)
-
-👉[Download Figma file](https://devias.s3.eu-west-2.amazonaws.com/products/react-material-dashboard/react-material-dashboard-free.fig)
+express server here :
 
 ## File Structure
 
 Within the download you'll find the following directories and files:
 
 ```
-material-react-dashboard
-
-├── .eslintrc
-├── .gitignore
-├── .prettierrc
-├── CHANGELOG.md
-├── jsconfig.json
-├── LICENSE.md
-├── package.json
-├── README.md
-├── public
-├── docs
+university system folder structure
 └── src
-	├── assets
-	├── common
-	├── components
-	├── helpers
-	├── icons
-	├── layouts
-	├── theme
-	├── views
-	│	├── Account
-	│	├── Dashboard
-	│	├── Icons
-	│	├── NotFound
-	│	├── ProductList
-	│	├── Settings
-	│	├── SignIn
-	│	├── SignUp
-	│	├── Typography
-	│	└── UserList
-	├── App.jsx
-	├── index.jsx
-	└── Routes.jsx
+    ├── API
+    │   ├── auth.js
+    │   ├── courseAPI.js
+    │   ├── enrollmentAPI.js
+    │   ├── studentAPI.js
+    │   └── superVisorAPI.js
+    ├── App.js
+    ├── components
+    │   ├── AlertDialog.js
+    │   ├── course
+    │   │   ├── AddCourse.js
+    │   │   ├── CourseDetails.js
+    │   │   ├── CourseFinishedListResults.js
+    │   │   ├── CourseListResult.js
+    │   │   ├── courseListToolbar.js
+    │   │   ├── CourseRegistrationListResults.js
+    │   │   └── courseRegistrationListToolbar.js
+    │   ├── dashboard
+    │   │   ├── Budget.js
+    │   │   ├── LatestOrders.js
+    │   │   ├── LatestProducts.js
+    │   │   ├── Sales.js
+    │   │   ├── TasksProgress.js
+    │   │   ├── TotalCustomers.js
+    │   │   ├── TotalProfit.js
+    │   │   └── TrafficByDevice.js
+    │   ├── DashboardLayout.js
+    │   ├── DashboardNavbar.js
+    │   ├── DashboardSidebar.js
+    │   ├── enrollment
+    │   │   ├── CourseEnrollmentListResult.js
+    │   │   ├── EnrollmentListResult.js
+    │   │   ├── EnrollmentListToolbar.js
+    │   │   └── StudentEnrollmentListResults.js
+    │   ├── GlobalStyles.js
+    │   ├── Header.js
+    │   ├── Logo.js
+    │   ├── MainLayout.js
+    │   ├── MainNavbar.js
+    │   ├── NavItem.js
+    │   ├── settings
+    │   │   ├── SettingsNotifications.js
+    │   │   └── SettingsPassword.js
+    │   ├── student
+    │   │   ├── AddStudent.js
+    │   │   ├── StudentListResults.js
+    │   │   ├── StudentListToolbar.js
+    │   │   └── studentprofile
+    │   │       ├── StudentProfileDetails.js
+    │   │       └── StudentProfile.js
+    │   └── superVisor
+    │       ├── AddSupervisor.js
+    │       ├── SuperVisorListResults.js
+    │       ├── SuperVisorListToolbar.js
+    │       └── supervisorProfile
+    │           ├── SuperVisorProfileDetails.js
+    │           └── SuperVisorProfile.js
+    ├── icons
+    │   ├── Facebook.js
+    │   └── Google.js
+    ├── index.js
+    ├── mixins
+    │   └── chartjs.js
+    ├── __mocks__
+    │   ├── customers.js
+    │   └── products.js
+    ├── pages
+    │   ├── course
+    │   │   ├── AddCoursePage.js
+    │   │   ├── CourseDetailsPage.js
+    │   │   ├── CourseFinished.js
+    │   │   ├── CourseList.js
+    │   │   └── CourseRegistration.js
+    │   ├── Dashboard.js
+    │   ├── enrollments
+    │   │   ├── EnrollmentList.js
+    │   │   └── StudentEnrollmentsList.js
+    │   ├── Login.js
+    │   ├── NotFound.js
+    │   ├── PlanAhead.js
+    │   ├── Settings.js
+    │   ├── student
+    │   │   ├── AddStudentPage.js
+    │   │   ├── StudentAccount.js
+    │   │   └── StudentList.js
+    │   └── supervisor
+    │       ├── AddSuperVisorPage.js
+    │       ├── SuperVisorAccount.js
+    │       └── SupervisorList.js
+    ├── routes.js
+    ├── serviceWorker.js
+    ├── theme
+    │   ├── index.js
+    │   ├── shadows.js
+    │   └── typography.js
+    └── utils
+        └── getInitials.js
 ```
 
-## Resources
+## Features :
 
-- More freebies like this one: <https://devias.io>
-
-## Reporting Issues:
-
-- [Github Issues Page](https://github.com/devias-io/react-material-dashboard/issues?ref=devias-io)
-
-## License
-
-- Licensed under MIT (https://github.com/devias-io/react-material-dashboard/blob/master/LICENSE.md)
-
-## Contact Us
-
-- Email Us: support@deviasio.zendesk.com
-- [Follow us on Instagram](https://www.instagram.com/deviasio/)
+- system has two main users : students and supervisors
+- student can :
+  1- register & enroll courses
+  2-show result of finished courses
+  3- show his current enrollments status
+  4- show all prerequisites for any course
+  5- student must complete all prerequisites courses before enroll to any course
+  6- edit password
+  -supervisors can :
+  1- add students , courses , or other supervisors
+  2- approve student enrollments .
+  3- add result for student enrollments ( it will be shown as finished courses in student view)
+  4- show enrollments by students or courses
+  5- show all students and courses data
