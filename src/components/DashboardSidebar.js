@@ -130,7 +130,9 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/"
         />
         <Typography color="textPrimary" variant="h4">
-          {!!user && `DR. ${user.fname} ${user.lname}`}
+          {!!user && user.role === 'supervisor'
+            ? `DR. ${user.fname} ${user.lname}`
+            : ` ${user.fname} ${user.lname}`}
         </Typography>
         {!!user && user.role === 'student' && (
           <Typography color="GrayText" variant="h6">

@@ -107,7 +107,7 @@ const EnrollmentListResults = () => {
                     <TableCell>
                       {enrollmentData.supervisor
                         ? `DR. ${enrollmentData.supervisor.fname} ${enrollmentData.supervisor.lname}`
-                        : 'Not Yet'}
+                        : 'No supervisor yet'}
                     </TableCell>
                     <TableCell>
                       <Chip
@@ -188,6 +188,19 @@ const EnrollmentListResults = () => {
                           }}
                         >
                           Unenroll
+                        </Button>
+                        <Button
+                          primary
+                          variant="outlined"
+                          onClick={() => {
+                            handleApprove(enrollmentData.id, {
+                              status: 'in review',
+                              isAproved: false,
+                              supervisorId: user.id
+                            });
+                          }}
+                        >
+                          Add Result
                         </Button>
                       </TableCell>
                     )}
