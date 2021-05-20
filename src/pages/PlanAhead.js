@@ -5,7 +5,7 @@ import { Box, Container, Grid, Typography } from '@material-ui/core';
 const PlanAheadPage = () => (
   <>
     <Helmet>
-      <title>CourseDetailsPage</title>
+      <title>Plan ahead</title>
     </Helmet>
     <Box
       sx={{
@@ -17,21 +17,7 @@ const PlanAheadPage = () => (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={8} md={6} xs={12}>
-            <Typography variant="h2">Level 1</Typography>
-          </Grid>
-          <Grid item lg={8} md={6} xs={12}>
-            <img
-              src="/static/images/tree.jpg"
-              alt="fue"
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                display: 'block'
-              }}
-            />
-          </Grid>
-          <Grid item lg={8} md={6} xs={12}>
-            <Typography variant="h2">Level 2</Typography>
+            <Typography variant="h2">Courses Tree</Typography>
           </Grid>
           <Grid item lg={8} md={6} xs={12}>
             <img

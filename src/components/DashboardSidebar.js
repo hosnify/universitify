@@ -15,6 +15,7 @@ import {
   Typography
 } from '@material-ui/core';
 import CardMembershipIcon from '@material-ui/icons/CardMembership';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
@@ -56,6 +57,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             href: `/app/student/${user.id}/enrollments`,
             icon: LibraryBooksIcon,
             title: 'My Enrollments'
+          },
+          {
+            href: '/app/planahead',
+            icon: AssignmentIcon,
+            title: 'Plan Ahead'
           }
         ]
       : [
@@ -84,11 +90,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             icon: SupervisorAccountIcon,
             title: 'Supervisors'
           }
-          // {
-          //   href: '/app/course/add',
-          //   icon: UserIcon,
-          //   title: 'Add Course'
-          // },
           // {
           //   href: '/app/supervisor/add',
           //   icon: UserIcon,
