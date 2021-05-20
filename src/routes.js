@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/components/DashboardLayout';
 import MainLayout from 'src/components/MainLayout';
 import StudentList from 'src/pages/student/StudentList';
-import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import CourseList from './pages/course/CourseList';
@@ -85,11 +84,6 @@ const routes = (user) => {
         {
           path: 'planahead',
           element: user ? <PlanAheadPage /> : <Navigate to="/login" />
-        },
-
-        {
-          path: 'dashboard',
-          element: user ? <Dashboard /> : <Navigate to="/login" />
         },
 
         { path: '*', element: <Navigate to="/login" /> }
