@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -20,7 +21,8 @@ import {
 import {
   deleteEnrollment,
   getAllEnrollments,
-  UpdateEnrollment
+  UpdateEnrollment,
+  EndEnrollment
 } from 'src/API/enrollmentAPI';
 import { InfoOutlined } from '@material-ui/icons';
 
@@ -43,6 +45,20 @@ const EnrollmentListResults = () => {
     getAllEnrollments().then((enrollmentsData) =>
       setEnrollments(enrollmentsData)
     );
+  };
+  const handleAddResult = async (id, result) => {
+    const grade = prompt(
+      'Enter Course result (GPA) in number from 0 to 4 : ',
+      'ex. 2.7'
+    );
+    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
+      await EndEnrollment(id, { ...result, grade });
+      getAllEnrollments().then((enrollmentsData) =>
+        setEnrollments(enrollmentsData)
+      );
+    } else {
+      alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
+    }
   };
   const handleDelete = async (id) => {
     await deleteEnrollment(id);
@@ -193,10 +209,11 @@ const EnrollmentListResults = () => {
                           primary
                           variant="outlined"
                           onClick={() => {
-                            handleApprove(enrollmentData.id, {
-                              status: 'in review',
-                              isAproved: false,
-                              supervisorId: user.id
+                            handleAddResult(enrollmentData.id, {
+                              courseId: enrollmentData.course.id,
+                              studentID: user.id,
+                              semester: 'FALL',
+                              instructorName: 'DR. Ali Ahmed'
                             });
                           }}
                         >
