@@ -73,7 +73,7 @@ const CourseFinishedListResults = ({ ...props }) => {
             </TableHead>
             <TableBody>
               {courses
-                .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
+                // .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
                 .map((courseData) => (
                   <TableRow hover key={courseData.courseId}>
                     <TableCell>{courseData.course.courseCode}</TableCell>

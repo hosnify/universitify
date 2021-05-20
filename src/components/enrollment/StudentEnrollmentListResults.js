@@ -1,3 +1,6 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
 /* eslint-disable react/prop-types */
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
@@ -19,8 +22,13 @@ import {
   Typography
 } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
-
 import { getEnrollmentByStudent } from 'src/API/studentAPI';
+
+import {
+  deleteEnrollment,
+  UpdateEnrollment,
+  EndEnrollment
+} from 'src/API/enrollmentAPI';
 import { UserContext } from '../../API/auth';
 
 const StudentEnrollmentListResults = ({ ...props }) => {
@@ -40,6 +48,32 @@ const StudentEnrollmentListResults = ({ ...props }) => {
       });
     }
   }, []);
+
+  const handleApprove = async (id, enrollment) => {
+    console.log(enrollment, id);
+    await UpdateEnrollment(id, enrollment);
+    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData.enrollments);
+    });
+  };
+  const handleDelete = async (id) => {
+    await deleteEnrollment(id);
+    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData.enrollments);
+    });
+  };
+  const handleAddResult = async (id, result) => {
+    await EndEnrollment(id, result);
+    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData.enrollments);
+    });
+  };
+  const handleCancel = async (id) => {
+    await deleteEnrollment(id);
+    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData.enrollments);
+    });
+  };
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -108,13 +142,105 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                         variant="outlined"
                       />
                     </TableCell>
-                    {user.role === 'supervisor' && (
+                    {user.role === 'supervisor' ? (
+                      (enrollmentData.status === 'in review' && (
+                        <TableCell>
+                          <Button
+                            primary
+                            variant="outlined"
+                            onClick={() => {
+                              handleApprove(enrollmentData.id, {
+                                status: 'enrolled',
+                                isAproved: true,
+                                supervisorId: user.id
+                              });
+                            }}
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() => {
+                              handleApprove(enrollmentData.id, {
+                                status: 'rejected',
+                                isAproved: false,
+                                supervisorId: user.id
+                              });
+                            }}
+                          >
+                            reject
+                          </Button>
+                        </TableCell>
+                      )) ||
+                      (enrollmentData.status === 'rejected' && (
+                        <TableCell>
+                          <Button
+                            primary
+                            variant="outlined"
+                            onClick={() => {
+                              handleApprove(enrollmentData.id, {
+                                status: 'in review',
+                                isAproved: true,
+                                supervisorId: user.id
+                              });
+                            }}
+                          >
+                            Undo
+                          </Button>
+                          <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() => {
+                              handleDelete(enrollmentData.id);
+                            }}
+                          >
+                            delete
+                          </Button>
+                        </TableCell>
+                      )) ||
+                      (enrollmentData.status === 'enrolled' && (
+                        <TableCell>
+                          <Button
+                            primary
+                            variant="outlined"
+                            onClick={() => {
+                              handleApprove(enrollmentData.id, {
+                                status: 'in review',
+                                isAproved: false,
+                                supervisorId: user.id
+                              });
+                            }}
+                          >
+                            Unenroll
+                          </Button>
+                          <Button
+                            primary
+                            variant="outlined"
+                            onClick={() => {
+                              handleAddResult(enrollmentData.id, {
+                                courseId: enrollmentData.course.id,
+                                studentID: user.id,
+                                grade: 1.8,
+                                semester: 'FALL',
+                                instructorName: 'DR. Ali Ahmed'
+                              });
+                            }}
+                          >
+                            Add Result
+                          </Button>
+                        </TableCell>
+                      ))
+                    ) : (
                       <TableCell>
-                        <Button primary variant="outlined">
-                          Approve
-                        </Button>
-                        <Button color="secondary" variant="outlined">
-                          reject
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          onClick={() => {
+                            handleCancel(enrollmentData.id);
+                          }}
+                        >
+                          Cancel
                         </Button>
                       </TableCell>
                     )}

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable indent */
@@ -39,6 +41,13 @@ const CourseRegistrationListResults = ({ ...props }) => {
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
   const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    if (user && user.role === 'student') {
+      getStudent(user.id).then((userData) => {
+        setUser({ role: 'student', ...userData });
+      });
+    }
+  }, []);
   useEffect(() => {
     if (user) {
       getAllCoursesByMajorAndLevel(user.major, props.level).then(
@@ -176,11 +185,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
 
                     <TableCell>
                       {isEligble(user, courseData) ? (
-                        <Box
-                          color="secondary"
-                          variant="outlined"
-                          onClick={() => handleEnroll(user.id, courseData.id)}
-                        >
+                        <Box color="secondary" variant="outlined">
                           {user.enrollments
                             .map((enrollment) => enrollment.courseID)
                             .includes(courseData.id) ? (
@@ -216,7 +221,13 @@ const CourseRegistrationListResults = ({ ...props }) => {
                               </Grid>
                             </Grid>
                           ) : (
-                            <Button>Enroll</Button>
+                            <Button
+                              onClick={() =>
+                                handleEnroll(user.id, courseData.id)
+                              }
+                            >
+                              Enroll
+                            </Button>
                           )}
                         </Box>
                       ) : (

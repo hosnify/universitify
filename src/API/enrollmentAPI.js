@@ -47,3 +47,13 @@ export const UpdateEnrollment = (id, enrollment) =>
     },
     body: JSON.stringify(enrollment)
   }).then((res) => res.json());
+
+export const EndEnrollment = (id, finishCourseData) =>
+  fetch(`${api}/enrollment/${id}/addresult`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(finishCourseData)
+  }).then((res) => res.json());
