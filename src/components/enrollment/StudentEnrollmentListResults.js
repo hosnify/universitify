@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable indent */
@@ -63,10 +64,18 @@ const StudentEnrollmentListResults = ({ ...props }) => {
     });
   };
   const handleAddResult = async (id, result) => {
-    await EndEnrollment(id, result);
-    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-      setEnrollment(enrollmentsData.enrollments);
-    });
+    const grade = prompt(
+      'Enter Course result (GPA) in number from 0 to 4 : ',
+      'ex. 2.7'
+    );
+    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
+      await EndEnrollment(id, { ...result, grade });
+      getEnrollmentByStudent(props.id).then((enrollmentsData) => {
+        setEnrollment(enrollmentsData.enrollments);
+      });
+    } else {
+      alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
+    }
   };
   const handleCancel = async (id) => {
     await deleteEnrollment(id);
@@ -221,9 +230,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                               handleAddResult(enrollmentData.id, {
                                 courseId: enrollmentData.course.id,
                                 studentID: user.id,
-                                grade: 1.8,
                                 semester: 'FALL',
-                                instructorName: 'DR. Ali Ahmed'
+                                instructorName: 'DR. Ali Ahmed' // TODO
                               });
                             }}
                           >

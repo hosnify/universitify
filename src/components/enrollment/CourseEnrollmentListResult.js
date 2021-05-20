@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
@@ -21,7 +22,8 @@ import {
 import {
   deleteEnrollment,
   getAllEnrollmentsByCourseId,
-  UpdateEnrollment
+  UpdateEnrollment,
+  EndEnrollment
 } from 'src/API/enrollmentAPI';
 import { InfoOutlined } from '@material-ui/icons';
 
@@ -51,6 +53,20 @@ const CourseEnrollmentListResult = (props) => {
     getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) =>
       setEnrollments(enrollmentsData.enrollments)
     );
+  };
+  const handleAddResult = async (id, result) => {
+    const grade = prompt(
+      'Enter Course result (GPA) in number from 0 to 4 : ',
+      'ex. 2.7'
+    );
+    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
+      await EndEnrollment(id, { ...result, grade });
+      getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) =>
+        setEnrollments(enrollmentsData.enrollments)
+      );
+    } else {
+      alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
+    }
   };
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -190,6 +206,20 @@ const CourseEnrollmentListResult = (props) => {
                           }}
                         >
                           Unenroll
+                        </Button>
+                        <Button
+                          primary
+                          variant="outlined"
+                          onClick={() => {
+                            handleAddResult(enrollmentData.id, {
+                              courseId: enrollmentData.course.id,
+                              studentID: user.id,
+                              semester: 'FALL',
+                              instructorName: 'DR. Ali Ahmed'
+                            });
+                          }}
+                        >
+                          Add Result
                         </Button>
                       </TableCell>
                     )}
