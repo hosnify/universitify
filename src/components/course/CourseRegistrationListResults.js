@@ -31,7 +31,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getAllCoursesByMajorAndLevel } from 'src/API/courseAPI';
 import { getStudent } from 'src/API/studentAPI';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-
 import { createOne as createEnrollment } from '../../API/enrollmentAPI';
 import { UserContext } from '../../API/auth';
 import AlertDialog from '../AlertDialog';

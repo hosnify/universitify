@@ -32,7 +32,7 @@ export default function Header(props) {
     <>
       <Toolbar className={classes.toolbar}>
         <img
-          src="https://s3-eu-west-1.amazonaws.com/forasna/uploads/logos/clogo_2018-03-13-13-39-07_XN4RHiEhyx3kwf5BduWR8gXX.png"
+          src="/static/images/futurelogo.png"
           alt="fue"
           style={{ maxWidth: '100%', maxHeight: '100%', display: 'block' }}
         />

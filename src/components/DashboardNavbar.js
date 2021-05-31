@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+/* eslint-disable no-unused-vars */
+import { useContext, useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import {
   AppBar,
-  // Badge,
+  Badge,
   Box,
   Button,
   Hidden,
@@ -13,11 +14,11 @@ import {
   Toolbar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-// import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-// import InputIcon from '@material-ui/icons/Input';
-import { makeStyles } from '@material-ui/core/styles';
+import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../API/auth';
+import NotificationPopUp from './notification/notificationPopUp';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -26,10 +27,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
-  // const [notifications] = useState([]);
   const classes = useStyles();
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    setNotifications(user.notifications ? user.notifications : []);
+  });
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -47,22 +52,14 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
     >
       <Toolbar>
         <img
-          src="https://s3-eu-west-1.amazonaws.com/forasna/uploads/logos/clogo_2018-03-13-13-39-07_XN4RHiEhyx3kwf5BduWR8gXX.png"
+          src="/static/images/futurelogo.png"
           alt="fue"
           style={{ maxWidth: '100%', maxHeight: '100%', display: 'block' }}
         />
         <Box sx={{ flexGrow: 1 }} />
 
         <Hidden lgDown>
-          {/* <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
+          <NotificationPopUp notifications={notifications} />
           <Button onClick={() => logout()} color="inherit" variant="contained">
             <Box paddingRight={2}> log out</Box>
             <InputIcon />
@@ -73,6 +70,18 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
           <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
           </IconButton>
+          <IconButton color="inherit">
+            <Badge
+              badgeContent={notifications.length}
+              color="secondary"
+              variant="standard"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <Button onClick={() => logout()} color="inherit" variant="contained">
+            <InputIcon />
+          </Button>
         </Hidden>
       </Toolbar>
     </AppBar>

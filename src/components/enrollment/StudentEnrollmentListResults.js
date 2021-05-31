@@ -30,6 +30,7 @@ import {
   UpdateEnrollment,
   EndEnrollment
 } from 'src/API/enrollmentAPI';
+import { createNotificationForStudent } from 'src/API/notificationAPI';
 import { UserContext } from '../../API/auth';
 
 const StudentEnrollmentListResults = ({ ...props }) => {
@@ -50,26 +51,54 @@ const StudentEnrollmentListResults = ({ ...props }) => {
     }
   }, []);
 
-  const handleApprove = async (id, enrollment) => {
-    console.log(enrollment, id);
-    await UpdateEnrollment(id, enrollment);
+  const handleApprove = async (enrollmentData, enrollment) => {
+    const updatedEnrollment = await UpdateEnrollment(
+      enrollmentData.id,
+      enrollment
+    );
+    await createNotificationForStudent(enrollmentData.student.id, {
+      data: {
+        title: 'enrollment approval',
+        senderName: `DR. ${user.fname} ${user.lname}`,
+        text: `updated your enrollment in course ${enrollmentData.course.name} `,
+        subText: `enrollment current status: ${updatedEnrollment.status}`,
+        avatar: user.avatar
+      }
+    }).then((res) => console.log(res));
     getEnrollmentByStudent(props.id).then((enrollmentsData) => {
       setEnrollment(enrollmentsData.enrollments);
     });
   };
-  const handleDelete = async (id) => {
-    await deleteEnrollment(id);
+  const handleDelete = async (enrollmentData) => {
+    await deleteEnrollment(enrollmentData.id);
+    await createNotificationForStudent(enrollmentData.student.id, {
+      data: {
+        title: 'enrollment approval',
+        senderName: `DR. ${user.fname} ${user.lname}`,
+        text: `deleted your enrollment in course ${enrollmentData.course.name}`,
+        avatar: user.avatar
+      }
+    });
     getEnrollmentByStudent(props.id).then((enrollmentsData) => {
       setEnrollment(enrollmentsData.enrollments);
     });
   };
-  const handleAddResult = async (id, result) => {
+  const handleAddResult = async (enrollmentData, result) => {
     const grade = prompt(
       'Enter Course result (GPA) in number from 0 to 4 : ',
       'ex. 2.7'
     );
     if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
-      await EndEnrollment(id, { ...result, grade });
+      await EndEnrollment(enrollmentData.id, { ...result, grade });
+      await createNotificationForStudent(enrollmentData.student.id, {
+        data: {
+          title: 'course result',
+          senderName: `DR. ${user.fname} ${user.lname}`,
+          text: `added your result in course ${enrollmentData.course.name}`,
+          subText: `your result is : ${grade}`,
+          avatar: user.avatar
+        }
+      });
       getEnrollmentByStudent(props.id).then((enrollmentsData) => {
         setEnrollment(enrollmentsData.enrollments);
       });
@@ -158,7 +187,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             primary
                             variant="outlined"
                             onClick={() => {
-                              handleApprove(enrollmentData.id, {
+                              handleApprove(enrollmentData, {
                                 status: 'enrolled',
                                 isAproved: true,
                                 supervisorId: user.id
@@ -171,7 +200,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             color="secondary"
                             variant="outlined"
                             onClick={() => {
-                              handleApprove(enrollmentData.id, {
+                              handleApprove(enrollmentData, {
                                 status: 'rejected',
                                 isAproved: false,
                                 supervisorId: user.id
@@ -188,7 +217,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             primary
                             variant="outlined"
                             onClick={() => {
-                              handleApprove(enrollmentData.id, {
+                              handleApprove(enrollmentData, {
                                 status: 'in review',
                                 isAproved: true,
                                 supervisorId: user.id
@@ -201,7 +230,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             color="secondary"
                             variant="outlined"
                             onClick={() => {
-                              handleDelete(enrollmentData.id);
+                              handleDelete(enrollmentData);
                             }}
                           >
                             delete
@@ -214,7 +243,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             primary
                             variant="outlined"
                             onClick={() => {
-                              handleApprove(enrollmentData.id, {
+                              handleApprove(enrollmentData, {
                                 status: 'in review',
                                 isAproved: false,
                                 supervisorId: user.id
@@ -227,10 +256,10 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             primary
                             variant="outlined"
                             onClick={() => {
-                              handleAddResult(enrollmentData.id, {
+                              handleAddResult(enrollmentData, {
                                 courseId: enrollmentData.course.id,
-                                studentID: user.id,
-                                semester: 'FALL',
+                                studentID: enrollmentData.student.id,
+                                semester: 'FALL', // todo
                                 instructorName: 'DR. Ali Ahmed' // TODO
                               });
                             }}
