@@ -29,7 +29,10 @@ import {
 } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { getAllCoursesByMajorAndLevel } from 'src/API/courseAPI';
+import {
+  getAllCoursesByMajorAndLevel,
+  getAllCoursesByMinorAndLevel
+} from 'src/API/courseAPI';
 import { getStudent } from 'src/API/studentAPI';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { createOne as createEnrollment } from '../../API/enrollmentAPI';
@@ -50,8 +53,11 @@ const CourseRegistrationListResults = ({ ...props }) => {
   }, []);
   useEffect(() => {
     if (user) {
-      getAllCoursesByMajorAndLevel(user.major, props.level).then(
+      getAllCoursesByMajorAndLevel(user.major.code, props.level).then(
         (coursesData) => setCourses(coursesData)
+      );
+      getAllCoursesByMinorAndLevel(user.minor.code, props.level).then(
+        (coursesData) => setCourses([...courses, ...coursesData])
       );
     }
   }, []);
@@ -115,167 +121,193 @@ const CourseRegistrationListResults = ({ ...props }) => {
             <TableBody>
               {courses
                 .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
-                .map((courseData) => (
-                  <TableRow hover key={courseData.id}>
-                    <TableCell>{courseData.courseCode}</TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
-                      >
-                        <Typography color="textPrimary" variant="body1">
-                          {courseData.name}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-
-                    <TableCell>{courseData.credit}</TableCell>
-                    <TableCell>
-                      {isEligble(user, courseData) ? (
-                        <Chip
-                          icon={<CheckCircleOutlineIcon />}
-                          label="Eligible"
-                          clickable
-                          color="primary"
-                          variant="outlined"
-                        />
-                      ) : (
-                        <Chip
-                          icon={<HighlightOffIcon />}
-                          label="Not eligible"
-                          clickable
-                          color="secondary"
-                          variant="outlined"
-                        />
-                      )}
-                    </TableCell>
-
-                    <TableCell>
-                      {isEligble(user, courseData) ? (
-                        <AlertDialog
-                          buttonText="show prerequisites"
-                          title={`Course ${courseData.name} prerequisites :`}
-                          color="primary"
-                          data={
-                            <List
-                              subheader="Prerequisites :"
-                              alignItems="flex-start"
-                            >
-                              {courseData.prerequisites.map((course) => (
-                                <ListItem divider key={course.id}>
-                                  {`Course : ${course.name} - level: ${course.level}`}
-                                </ListItem>
-                              ))}
-                            </List>
-                          }
-                        />
-                      ) : (
-                        <AlertDialog
-                          buttonText="show prerequisites"
-                          title={`Course : ${courseData.name} `}
-                          color="secondary"
-                          data={
-                            <List
-                              subheader="Prerequisites :"
-                              alignItems="flex-start"
-                            >
-                              {courseData.prerequisites.map((course) => (
-                                <ListItem divider key={course.id}>
-                                  {`Course : ${course.name} - level: ${course.level}`}
-                                </ListItem>
-                              ))}
-                            </List>
-                          }
-                        />
-                      )}
-                    </TableCell>
-
-                    <TableCell>
-                      {isEligble(user, courseData) ? (
-                        <Box color="secondary" variant="outlined">
-                          {user.enrollments
-                            .map((enrollment) => enrollment.courseID)
-                            .includes(courseData.id) ? (
+                .map(
+                  (courseData) =>
+                    !(
+                      isCourseTaken(user, courseData) &&
+                      isPassed(user, courseData)
+                    ) && (
+                      <TableRow hover key={courseData.id}>
+                        <TableCell>{courseData.courseCode}</TableCell>
+                        <TableCell>
+                          <Box
+                            sx={{
+                              alignItems: 'center',
+                              display: 'flex'
+                            }}
+                          >
+                            <Typography color="textPrimary" variant="body1">
+                              {courseData.name}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{courseData.credit}</TableCell>
+                        <TableCell>
+                          {isEligble(user, courseData) ? (
                             <Grid
                               container
                               flexDirection="column"
-                              spacing={1}
+                              spacing={2}
                               justifyContent="center"
                               alignItems="center"
                             >
-                              <Grid item>
-                                <Chip
-                                  icon={<CheckCircleOutlineIcon />}
-                                  label="currently enrolled"
-                                  clickable
-                                  color="primary"
-                                  variant="outlined"
-                                />
-                              </Grid>
-                              <Grid item>
-                                <Chip
-                                  icon={<InfoOutlinedIcon />}
-                                  label={
-                                    user.enrollments.find(
-                                      (enrollment) =>
-                                        enrollment.courseID === courseData.id
-                                    ).status
-                                  }
-                                  clickable
-                                  color="default"
-                                  variant="outlined"
-                                />
-                              </Grid>
-                            </Grid>
-                          ) : isCourseTaken(user, courseData) ? (
-                            isPassed(user, courseData) ? (
                               <Chip
                                 icon={<CheckCircleOutlineIcon />}
-                                label="passed"
+                                label="Eligible"
                                 clickable
                                 color="primary"
                                 variant="outlined"
                               />
-                            ) : (
-                              <>
+                              {courseData.major &&
+                              user.major.code === courseData.major.code ? (
                                 <Chip
-                                  icon={<HighlightOffIcon />}
-                                  label="Not Passed"
+                                  label={`Major : ${user.major.name}`}
                                   clickable
-                                  color="secondary"
+                                  color="primary"
                                   variant="outlined"
                                 />
+                              ) : (
+                                <Chip
+                                  label={`Minor : ${user.minor.name}`}
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                />
+                              )}
+                            </Grid>
+                          ) : (
+                            <Grid
+                              container
+                              flexDirection="column"
+                              spacing={2}
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <Chip
+                                icon={<HighlightOffIcon />}
+                                label="Not eligible"
+                                clickable
+                                color="secondary"
+                                variant="outlined"
+                              />
+                              {courseData.major &&
+                              user.major.code === courseData.major.code ? (
+                                <Chip
+                                  label={`Major : ${user.major.name}`}
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                />
+                              ) : (
+                                <Chip
+                                  label={`Minor : ${user.minor.name}`}
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                />
+                              )}
+                            </Grid>
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {isEligble(user, courseData) ? (
+                            <AlertDialog
+                              buttonText="show prerequisites"
+                              title={`Course ${courseData.name} prerequisites :`}
+                              color="primary"
+                              data={
+                                <List
+                                  subheader="Prerequisites :"
+                                  alignItems="flex-start"
+                                >
+                                  {courseData.prerequisites.map((course) => (
+                                    <ListItem divider key={course.id}>
+                                      {`Course : ${course.name} - level: ${course.level}`}
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              }
+                            />
+                          ) : (
+                            <AlertDialog
+                              buttonText="show prerequisites"
+                              title={`Course : ${courseData.name} `}
+                              color="secondary"
+                              data={
+                                <List
+                                  subheader="Prerequisites :"
+                                  alignItems="flex-start"
+                                >
+                                  {courseData.prerequisites.map((course) => (
+                                    <ListItem divider key={course.id}>
+                                      {`Course : ${course.name} - level: ${course.level}`}
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              }
+                            />
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {isEligble(user, courseData) ? (
+                            <Box color="secondary" variant="outlined">
+                              {user.enrollments
+                                .map((enrollment) => enrollment.courseID)
+                                .includes(courseData.id) ? (
+                                <Grid
+                                  container
+                                  flexDirection="column"
+                                  spacing={1}
+                                  justifyContent="center"
+                                  alignItems="center"
+                                >
+                                  <Grid item>
+                                    <Chip
+                                      icon={<CheckCircleOutlineIcon />}
+                                      label="currently enrolled"
+                                      clickable
+                                      color="primary"
+                                      variant="outlined"
+                                    />
+                                  </Grid>
+                                  <Grid item>
+                                    <Chip
+                                      icon={<InfoOutlinedIcon />}
+                                      label={
+                                        user.enrollments.find(
+                                          (enrollment) =>
+                                            enrollment.courseID ===
+                                            courseData.id
+                                        ).status
+                                      }
+                                      clickable
+                                      color="default"
+                                      variant="outlined"
+                                    />
+                                  </Grid>
+                                </Grid>
+                              ) : (
                                 <Button
                                   variant="outlined"
                                   onClick={() =>
                                     handleEnroll(user.id, courseData.id)
                                   }
                                 >
-                                  Enroll again
+                                  Enroll
                                 </Button>
-                              </>
-                            )
+                              )}
+                            </Box>
                           ) : (
-                            <Button
-                              variant="outlined"
-                              onClick={() =>
-                                handleEnroll(user.id, courseData.id)
-                              }
-                            >
+                            <Button primary disabled variant="outlined">
                               Enroll
                             </Button>
                           )}
-                        </Box>
-                      ) : (
-                        <Button primary disabled variant="outlined">
-                          Enroll
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                        </TableCell>
+                      </TableRow>
+                    )
+                )}
             </TableBody>
           </Table>
         </Box>

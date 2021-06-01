@@ -17,7 +17,6 @@ import { InfoOutlined } from '@material-ui/icons';
 import { getAllStudents } from 'src/API/studentAPI';
 import StudentEnrollmentListResults from '../enrollment/StudentEnrollmentListResults';
 import AlertDialog from '../AlertDialog';
-// import getInitials from 'src/utils/getInitials';
 
 const StudentListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
@@ -78,7 +77,9 @@ const StudentListResults = ({ ...rest }) => {
                       </Box>
                     </TableCell>
                     <TableCell>{studentData.level}</TableCell>
-                    <TableCell>{studentData.major}</TableCell>
+                    <TableCell>
+                      {studentData.major ? studentData.major.code : 'NULL'}
+                    </TableCell>
                     <TableCell>
                       {(studentData.coursesFinished.length * 3).toString()}
                       {/* TODO: change with CreditHoursDone */}

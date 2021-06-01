@@ -17,7 +17,10 @@ export const getAllCourses = () =>
   fetch(`${api}/courses`).then((res) => res.json());
 
 export const getAllCoursesByMajorAndLevel = (major, level) =>
-  fetch(`${api}/courses/${major}/${level}`).then((res) => res.json());
+  fetch(`${api}/courses/major/${major}/${level}`).then((res) => res.json());
+
+export const getAllCoursesByMinorAndLevel = (minor, level) =>
+  fetch(`${api}/courses/minor/${minor}/${level}`).then((res) => res.json());
 
 export const createOne = (course) =>
   fetch(`${api}/course/`, {
