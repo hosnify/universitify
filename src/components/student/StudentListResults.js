@@ -3,7 +3,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
   Box,
-  Button,
   Card,
   Chip,
   Table,
@@ -16,18 +15,17 @@ import {
 } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
 import { getAllStudents } from 'src/API/studentAPI';
-import { useNavigate } from 'react-router-dom';
+import StudentEnrollmentListResults from '../enrollment/StudentEnrollmentListResults';
+import AlertDialog from '../AlertDialog';
 // import getInitials from 'src/utils/getInitials';
 
 const StudentListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
-  const navigate = useNavigate();
   useEffect(() => {
     getAllStudents().then((studentsData) => setStudents(studentsData));
   }, []);
-  console.log(students);
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -37,16 +35,15 @@ const StudentListResults = ({ ...rest }) => {
   };
 
   const studentTableMetaData = [
-    'id',
+    'ID',
     'Student name',
     'Level',
     'Major',
-    'program',
     'Completed CreditHours',
-    'requested CreditHours',
+    'Requested CreditHours',
     'Courses finished',
-    'enrollment status',
-    'student profile'
+    'Status',
+    'Enrollments'
   ];
 
   return (
@@ -74,9 +71,7 @@ const StudentListResults = ({ ...rest }) => {
                           display: 'flex'
                         }}
                       >
-                        <Avatar src={studentData.avatarUrl} sx={{ mr: 2 }}>
-                          {/* {getInitials(customer.name)} */}
-                        </Avatar>
+                        <Avatar src={studentData.avatarUrl} sx={{ mr: 2 }} />
                         <Typography color="textPrimary" variant="body1">
                           {`${studentData.fname} ${studentData.lname}`}
                         </Typography>
@@ -84,7 +79,6 @@ const StudentListResults = ({ ...rest }) => {
                     </TableCell>
                     <TableCell>{studentData.level}</TableCell>
                     <TableCell>{studentData.major}</TableCell>
-                    <TableCell>{studentData.program}</TableCell>
                     <TableCell>
                       {(studentData.coursesFinished.length * 3).toString()}
                       {/* TODO: change with CreditHoursDone */}
@@ -106,17 +100,16 @@ const StudentListResults = ({ ...rest }) => {
                         />
                       )}
                     </TableCell>
+
                     <TableCell>
-                      <Button
-                        primary
-                        onClick={() => {
-                          navigate(
-                            `/app/student/${studentData.id}/enrollments`
-                          );
-                        }}
-                      >
-                        show enrollments
-                      </Button>
+                      <AlertDialog
+                        buttonText="Enrollments"
+                        title={`student: ${studentData.fname} ${studentData.lname} enrollments :`}
+                        color="primary"
+                        data={
+                          <StudentEnrollmentListResults id={studentData.id} />
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

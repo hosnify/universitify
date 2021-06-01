@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/prop-types */
@@ -61,6 +62,15 @@ const CourseRegistrationListResults = ({ ...props }) => {
       .every((id) =>
         user.coursesFinished.map((course) => course.courseId).includes(id)
       );
+  const isCourseTaken = (loggeduser, inputCourse) =>
+    loggeduser &&
+    user.coursesFinished.some((course) => course.courseId === inputCourse.id);
+
+  const isPassed = (loggeduser, inputCourse) =>
+    loggeduser &&
+    user.coursesFinished.some(
+      (course) => course.courseId === inputCourse.id && course.grade > 1.7
+    );
 
   const handleEnroll = async (userId, courseId) => {
     await createEnrollment({
@@ -198,7 +208,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
                               <Grid item>
                                 <Chip
                                   icon={<CheckCircleOutlineIcon />}
-                                  label="Already enrolled"
+                                  label="currently enrolled"
                                   clickable
                                   color="primary"
                                   variant="outlined"
@@ -219,8 +229,37 @@ const CourseRegistrationListResults = ({ ...props }) => {
                                 />
                               </Grid>
                             </Grid>
+                          ) : isCourseTaken(user, courseData) ? (
+                            isPassed(user, courseData) ? (
+                              <Chip
+                                icon={<CheckCircleOutlineIcon />}
+                                label="passed"
+                                clickable
+                                color="primary"
+                                variant="outlined"
+                              />
+                            ) : (
+                              <>
+                                <Chip
+                                  icon={<HighlightOffIcon />}
+                                  label="Not Passed"
+                                  clickable
+                                  color="secondary"
+                                  variant="outlined"
+                                />
+                                <Button
+                                  variant="outlined"
+                                  onClick={() =>
+                                    handleEnroll(user.id, courseData.id)
+                                  }
+                                >
+                                  Enroll again
+                                </Button>
+                              </>
+                            )
                           ) : (
                             <Button
+                              variant="outlined"
                               onClick={() =>
                                 handleEnroll(user.id, courseData.id)
                               }

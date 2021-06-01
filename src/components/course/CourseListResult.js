@@ -107,7 +107,7 @@ const CourseListResults = () => {
                     <TableCell>
                       <AlertDialog
                         buttonText="Enrollments"
-                        title={`Course ${courseData.name} prerequisites :`}
+                        title={`Course ${courseData.name} enrollments :`}
                         color="primary"
                         data={
                           <CourseEnrollmentListResult

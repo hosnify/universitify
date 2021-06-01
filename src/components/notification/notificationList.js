@@ -9,6 +9,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import { IconButton, ListItemSecondaryAction, colors } from '@material-ui/core';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { UpdateNotification } from '../../API/notificationAPI';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +26,10 @@ const useStyles = makeStyles((theme) => ({
 
 function NotificationList({ ...props }) {
   const classes = useStyles();
-
+  const handleReadNotification = async (id, status) => {
+    await UpdateNotification(id, status);
+    props.handleUpdateNotification(id);
+  };
   return (
     <List className={classes.root}>
       {props.notifications.map((notification) => (
@@ -34,7 +40,15 @@ function NotificationList({ ...props }) {
               {/* TODO */}
             </ListItemAvatar>
             <ListItemText
-              primary={notification.data.title}
+              primary={
+                <Typography
+                  component="span"
+                  variant="h5"
+                  color={colors.red[600]}
+                >
+                  {notification.data.title}
+                </Typography>
+              }
               secondary={
                 <>
                   <Typography
@@ -47,7 +61,7 @@ function NotificationList({ ...props }) {
                   </Typography>
                   <Typography
                     component="span"
-                    variant="h5"
+                    variant="h6"
                     className={classes.inline}
                     color="textPrimary"
                   >
@@ -56,15 +70,30 @@ function NotificationList({ ...props }) {
                   <Typography
                     component="div"
                     variant="body1"
-                    color="textPrimary"
+                    color={colors.green[600]}
                   >
                     {notification.data.subText}
                   </Typography>
                 </>
               }
             />
+            {notification.status === 0 && (
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="read"
+                  onClick={() => {
+                    handleReadNotification(notification.id, { status: 1 });
+                  }}
+                >
+                  <FiberManualRecordIcon
+                    style={{ color: colors.lightBlue[700] }}
+                  />
+                </IconButton>
+              </ListItemSecondaryAction>
+            )}
           </ListItem>
-          <Divider variant="inset" component="li" />
+          <Divider variant="fullWidth" component="li" />
         </React.Fragment>
       ))}
     </List>

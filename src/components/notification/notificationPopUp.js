@@ -1,13 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Badge, Box, IconButton } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import NotificationList from './notificationList';
 
-export default function NotificationPopUp(props) {
+export default function NotificationPopUp({ ...props }) {
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    setNotifications(props.notifications);
+  }, []);
+  const handleUpdateNotification = (id) => {
+    setNotifications(
+      notifications.map((notification) => ({
+        ...notification,
+        status: notification.id === id ? 1 : notification.status
+      }))
+    );
+  };
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState) => (
@@ -18,7 +30,11 @@ export default function NotificationPopUp(props) {
             {...bindTrigger(popupState)}
           >
             <Badge
-              badgeContent={props.notifications.length}
+              badgeContent={
+                notifications.filter(
+                  (notification) => notification.status === 0
+                ).length
+              }
               color="secondary"
               variant="standard"
             >
@@ -37,7 +53,10 @@ export default function NotificationPopUp(props) {
             }}
           >
             <Box p={2}>
-              <NotificationList notifications={props.notifications} />
+              <NotificationList
+                notifications={notifications}
+                handleUpdateNotification={(id) => handleUpdateNotification(id)}
+              />
             </Box>
           </Popover>
         </div>
