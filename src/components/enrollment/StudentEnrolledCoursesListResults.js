@@ -23,17 +23,17 @@ import {
   Typography
 } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
-import { getEnrollmentByStudent } from 'src/API/studentAPI';
 
 import {
   deleteEnrollment,
   UpdateEnrollment,
-  EndEnrollment
+  EndEnrollment,
+  getCurrentEnrolledCoursesByStudentId
 } from 'src/API/enrollmentAPI';
 import { createNotificationForStudent } from 'src/API/notificationAPI';
 import { UserContext } from '../../API/auth';
 
-const StudentEnrollmentListResults = ({ ...props }) => {
+const StudentEnrolledCoursesListResults = ({ ...props }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [enrollments, setEnrollment] = useState([]);
@@ -41,12 +41,12 @@ const StudentEnrollmentListResults = ({ ...props }) => {
 
   useEffect(() => {
     if (user && user.role === 'student') {
-      getEnrollmentByStudent(user.id).then((enrollmentsData) =>
-        setEnrollment(enrollmentsData.enrollments)
+      getCurrentEnrolledCoursesByStudentId(user.id).then((enrollmentsData) =>
+        setEnrollment(enrollmentsData)
       );
     } else {
-      getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-        setEnrollment(enrollmentsData.enrollments);
+      getCurrentEnrolledCoursesByStudentId(props.id).then((enrollmentsData) => {
+        setEnrollment(enrollmentsData);
       });
     }
   }, []);
@@ -65,8 +65,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
         avatar: user.avatar
       }
     }).then((res) => console.log(res));
-    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-      setEnrollment(enrollmentsData.enrollments);
+    getCurrentEnrolledCoursesByStudentId(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData);
     });
   };
   const handleDelete = async (enrollmentData) => {
@@ -79,8 +79,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
         avatar: user.avatar
       }
     });
-    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-      setEnrollment(enrollmentsData.enrollments);
+    getCurrentEnrolledCoursesByStudentId(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData);
     });
   };
   const handleAddResult = async (enrollmentData, result) => {
@@ -99,8 +99,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
           avatar: user.avatar
         }
       });
-      getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-        setEnrollment(enrollmentsData.enrollments);
+      getCurrentEnrolledCoursesByStudentId(props.id).then((enrollmentsData) => {
+        setEnrollment(enrollmentsData);
       });
     } else {
       alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
@@ -108,8 +108,8 @@ const StudentEnrollmentListResults = ({ ...props }) => {
   };
   const handleCancel = async (id) => {
     await deleteEnrollment(id);
-    getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-      setEnrollment(enrollmentsData.enrollments);
+    getCurrentEnrolledCoursesByStudentId(props.id).then((enrollmentsData) => {
+      setEnrollment(enrollmentsData);
     });
   };
   const handleLimitChange = (event) => {
@@ -144,9 +144,6 @@ const StudentEnrollmentListResults = ({ ...props }) => {
             </TableHead>
             <TableBody>
               {enrollments
-                .filter(
-                  (enrollmentData) => enrollmentData.status !== 'enrolled'
-                )
                 .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
                 .map((enrollmentData) => (
                   <TableRow hover key={enrollmentData.id}>
@@ -303,4 +300,4 @@ const StudentEnrollmentListResults = ({ ...props }) => {
   );
 };
 
-export default StudentEnrollmentListResults;
+export default StudentEnrolledCoursesListResults;

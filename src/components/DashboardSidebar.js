@@ -51,12 +51,17 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           {
             href: `/app/student/${user.id}/Courses`,
             icon: CardMembershipIcon,
-            title: 'My Courses'
+            title: 'Courses result'
+          },
+          {
+            href: `/app/student/${user.id}/CurrentCourses`,
+            icon: CardMembershipIcon,
+            title: 'Enrolled Courses'
           },
           {
             href: `/app/student/${user.id}/enrollments`,
             icon: LibraryBooksIcon,
-            title: 'My Enrollments'
+            title: 'Enrollments'
           },
           {
             href: '/app/planahead',

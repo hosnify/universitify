@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -5,6 +6,7 @@ import {
   Box,
   Card,
   Chip,
+  Grid,
   Table,
   TableBody,
   TableCell,
@@ -17,6 +19,7 @@ import { InfoOutlined } from '@material-ui/icons';
 import { getAllStudents } from 'src/API/studentAPI';
 import StudentEnrollmentListResults from '../enrollment/StudentEnrollmentListResults';
 import AlertDialog from '../AlertDialog';
+import StudentEnrolledCoursesListResults from '../enrollment/StudentEnrolledCoursesListResults';
 
 const StudentListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
@@ -105,10 +108,19 @@ const StudentListResults = ({ ...rest }) => {
                     <TableCell>
                       <AlertDialog
                         buttonText="Enrollments"
-                        title={`student: ${studentData.fname} ${studentData.lname} enrollments :`}
+                        title={
+                          <Typography variant="h3">
+                            {`student name :  ${studentData.fname} ${studentData.lname}`}
+                          </Typography>
+                        }
                         color="primary"
                         data={
-                          <StudentEnrollmentListResults id={studentData.id} />
+                          <Grid>
+                            <StudentEnrollmentListResults id={studentData.id} />
+                            <StudentEnrolledCoursesListResults
+                              id={studentData.id}
+                            />
+                          </Grid>
                         }
                       />
                     </TableCell>

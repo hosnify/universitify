@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 const api = 'http://localhost:8888';
 
@@ -19,6 +20,10 @@ export const getAllEnrollments = () =>
 export const getAllEnrollmentsByCourseId = (id) =>
   fetch(`${api}/course/${id}/enrollments`).then((res) => res.json());
 
+export const getCurrentEnrolledCoursesByStudentId = (id) =>
+  fetch(`${api}/student/${id}/enrolledCourses`, { headers }).then((res) =>
+    res.json()
+  );
 export const createOne = ({ ...enrollment }) =>
   fetch(`${api}/enrollment/`, {
     method: 'POST',

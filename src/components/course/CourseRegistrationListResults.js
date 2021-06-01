@@ -147,7 +147,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
                             <Grid
                               container
                               flexDirection="column"
-                              spacing={2}
+                              columnGap={1}
                               justifyContent="center"
                               alignItems="center"
                             >
@@ -179,7 +179,6 @@ const CourseRegistrationListResults = ({ ...props }) => {
                             <Grid
                               container
                               flexDirection="column"
-                              spacing={2}
                               justifyContent="center"
                               alignItems="center"
                             >
