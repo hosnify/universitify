@@ -70,15 +70,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
           <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
           </IconButton>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="secondary"
-              variant="standard"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <NotificationPopUp notifications={notifications} />
           <Button onClick={() => logout()} color="inherit" variant="contained">
             <InputIcon />
           </Button>

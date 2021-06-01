@@ -55,11 +55,11 @@ const Login = () => {
                 const currentuser = currentUser();
                 setUser(currentuser);
                 if (currentuser && currentuser.role === 'student') {
-                  getStudent(currentuser.id).then((userData) => {
+                  await getStudent(currentuser.id).then((userData) => {
                     setUser({ role: 'student', ...userData });
                   });
                 } else {
-                  getSuperVisor(currentuser.id).then((userData) => {
+                  await getSuperVisor(currentuser.id).then((userData) => {
                     setUser({ role: 'supervisor', ...userData });
                   });
                 }

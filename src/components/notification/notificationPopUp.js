@@ -8,10 +8,11 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import NotificationList from './notificationList';
 
 export default function NotificationPopUp({ ...props }) {
-  const [notifications, setNotifications] = useState([]);
-  useEffect(() => {
-    setNotifications(props.notifications);
-  }, []);
+  const [notifications, setNotifications] = useState(props.notifications);
+  // useEffect(() => {
+  //   setNotifications(props.notifications);
+  //   console.log(notifications);
+  // }, []);
   const handleUpdateNotification = (id) => {
     setNotifications(
       notifications.map((notification) => ({

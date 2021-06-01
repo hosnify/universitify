@@ -1,4 +1,8 @@
-import { useState, useContext } from 'react';
+import {
+  useState,
+  // useContext
+  useEffect
+} from 'react';
 import {
   Alert,
   Box,
@@ -8,26 +12,40 @@ import {
   CardHeader,
   Divider,
   Grid,
+  MenuItem,
   Snackbar,
   TextField
 } from '@material-ui/core';
 import { createOne } from 'src/API/studentAPI';
-import SettingsPassword from '../settings/SettingsPassword';
-import { UserContext } from '../../API/auth';
+import { getAllMajors } from 'src/API/majorAPI';
+import { getAllSuperVisors } from 'src/API/superVisorAPI';
+// import { UserContext } from '../../API/auth';
 
 const AddStudent = (props) => {
   const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const [supervisors, setSupervisors] = useState([]);
+  const [majors, setMajors] = useState([]);
 
+  useEffect(async () => {
+    const majorsData = await getAllMajors();
+    setMajors(majorsData);
+  }, []);
+  useEffect(async () => {
+    const supervisorsData = await getAllSuperVisors();
+    setSupervisors(supervisorsData);
+  }, []);
   const handleChange = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
+  // const handleSelectMajor = (event) => {
+  //   setMajor(event.target.value);
+  // };
   const handleAdd = () => {
-    createOne({ ...values, supervisorId: user.id }).then(() => {
+    createOne({ ...values }).then(() => {
       console.log(values);
       setOpen(true);
     });
@@ -79,68 +97,87 @@ const AddStudent = (props) => {
                 variant="outlined"
               />
             </Grid>
-
             <Grid item md={6} xs={12}>
               <TextField
-                fullWidth
-                label="Level"
-                name="level"
-                type="number"
+                select
+                label="Gender"
+                name="gender"
                 onChange={handleChange}
-                variant="outlined"
-              />
+                fullWidth
+              >
+                {['MALE', 'FEMALE'].map((gender) => (
+                  <MenuItem key={gender} value={gender}>
+                    {gender}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
+                select
+                label="major"
                 fullWidth
-                label="Current Semester"
-                name="semester"
-                required
+                name="majorId"
                 onChange={handleChange}
-                variant="outlined"
-              />
+                helperText="Please select student major"
+              >
+                {majors.map((majorData) => (
+                  <MenuItem key={majorData.id} value={majorData.id}>
+                    {majorData.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
-                fullWidth
-                label="credits Earned"
-                name="creditDone"
-                type="number"
+                select
+                label="minor"
+                name="minorId"
                 onChange={handleChange}
-                variant="outlined"
-              />
+                helperText="Please select student minor"
+              >
+                {majors.map((majorData) => (
+                  <MenuItem key={majorData.id} value={majorData.id}>
+                    {majorData.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
-                fullWidth
-                label="credits available"
-                name="creditHave"
-                type="number"
+                select
+                label="supervisor"
+                name="supervisorId"
                 onChange={handleChange}
-                variant="outlined"
-                helperText="for current semester"
-              />
+                helperText="Please select student supervisorId"
+              >
+                {supervisors.map((supervisorData) => (
+                  <MenuItem key={supervisorData.id} value={supervisorData.id}>
+                    {` DR. ${supervisorData.fname} ${supervisorData.lname}`}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="GPA"
-                name="GPA"
-                type="number"
-                onChange={handleChange}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Last Term GPA"
-                name="lastTermGPA"
-                type="number"
-                onChange={handleChange}
-                variant="outlined"
-              />
-            </Grid>
+            <TextField
+              fullWidth
+              label="Password"
+              margin="normal"
+              name="password"
+              onChange={handleChange}
+              type="password"
+              value={values.password}
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Confirm password"
+              margin="normal"
+              name="confirm"
+              onChange={handleChange}
+              type="password"
+              value={values.confirm}
+              variant="outlined"
+            />
           </Grid>
         </CardContent>
         <Divider />
@@ -161,7 +198,6 @@ const AddStudent = (props) => {
           </Snackbar>
         </Box>
         <Divider />
-        <SettingsPassword />
       </Card>
     </form>
   );

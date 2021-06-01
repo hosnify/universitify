@@ -1,5 +1,7 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-wrap-multilines */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -20,13 +22,19 @@ import { getAllStudents } from 'src/API/studentAPI';
 import StudentEnrollmentListResults from '../enrollment/StudentEnrollmentListResults';
 import AlertDialog from '../AlertDialog';
 import StudentEnrolledCoursesListResults from '../enrollment/StudentEnrolledCoursesListResults';
+import { UserContext } from '../../API/auth';
 
 const StudentListResults = ({ ...rest }) => {
+  const { user } = useContext(UserContext);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
   useEffect(() => {
-    getAllStudents().then((studentsData) => setStudents(studentsData));
+    getAllStudents().then((studentsData) =>
+      setStudents(
+        studentsData.filter((student) => student.supervisorId === user.id)
+      )
+    );
   }, []);
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
