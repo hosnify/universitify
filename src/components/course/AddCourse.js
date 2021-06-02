@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-wrap-multilines */
+import { useState, useEffect } from 'react';
 import {
   Alert,
   Box,
@@ -7,25 +8,40 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  FormControlLabel,
   Grid,
+  MenuItem,
   Snackbar,
+  Switch,
   TextField
 } from '@material-ui/core';
 import { createOne, updateCoursePrerequisites } from 'src/API/courseAPI';
+import { getAllMajors } from 'src/API/majorAPI';
 
 const AddCourse = (props) => {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({ minorId: false });
   const [open, setOpen] = useState(false);
+  const [majors, setMajors] = useState([]);
+  useEffect(async () => {
+    const majorsData = await getAllMajors();
+    setMajors(majorsData);
+  }, []);
 
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      [event.target.name === 'minorId' && event.target.name]: event.target
+        .checked
+        ? values.majorId
+        : null
     });
   };
 
   const handleAdd = async () => {
     const newCourse = await createOne({ ...values });
+    console.log(values);
+
     await updateCoursePrerequisites(newCourse.id, {
       prerequisites: values.prerequisites.split(',')
     });
@@ -67,13 +83,19 @@ const AddCourse = (props) => {
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
+                select
+                label="major"
                 fullWidth
-                label="Major"
-                name="major"
+                name="majorId"
                 onChange={handleChange}
-                required
-                variant="outlined"
-              />
+                helperText="Please select student major"
+              >
+                {majors.map((majorData) => (
+                  <MenuItem key={majorData.id} value={majorData.id}>
+                    {majorData.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
@@ -116,6 +138,19 @@ const AddCourse = (props) => {
                 required
                 variant="outlined"
                 helperText="enter course code seperated by comma  ex: MIS86,MIS89 "
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={!!values.minorId}
+                    onChange={handleChange}
+                    name="minorId"
+                    color="primary"
+                  />
+                }
+                label="available for minor students ?"
               />
             </Grid>
           </Grid>
