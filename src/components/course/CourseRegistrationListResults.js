@@ -35,6 +35,7 @@ import {
 } from 'src/API/courseAPI';
 import { getStudent } from 'src/API/studentAPI';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { createNotificationForSupervisor } from 'src/API/notificationAPI';
 import { createOne as createEnrollment } from '../../API/enrollmentAPI';
 import { UserContext } from '../../API/auth';
 import AlertDialog from '../AlertDialog';
@@ -78,11 +79,20 @@ const CourseRegistrationListResults = ({ ...props }) => {
       (course) => course.courseId === inputCourse.id && course.grade > 1.7
     );
 
-  const handleEnroll = async (userId, courseId) => {
+  const handleEnroll = async (userId, courseId, courseName) => {
     await createEnrollment({
       studentID: userId,
       courseID: courseId
     });
+    await createNotificationForSupervisor(user.supervisorId, {
+      data: {
+        title: 'Enrollment Request',
+        senderName: ` ${user.fname} ${user.lname}`,
+        text: `requested new registration in course ${courseName} `,
+        subText: 'need review',
+        avatar: user.avatar
+      }
+    }).then((res) => console.log(res));
     if (user && user.role === 'student') {
       getStudent(user.id).then((userData) => {
         setUser({ role: 'student', ...userData });
@@ -291,7 +301,11 @@ const CourseRegistrationListResults = ({ ...props }) => {
                                 <Button
                                   variant="outlined"
                                   onClick={() =>
-                                    handleEnroll(user.id, courseData.id)
+                                    handleEnroll(
+                                      user.id,
+                                      courseData.id,
+                                      courseData.name
+                                    )
                                   }
                                 >
                                   Enroll

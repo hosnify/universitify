@@ -30,7 +30,10 @@ import {
   UpdateEnrollment,
   EndEnrollment
 } from 'src/API/enrollmentAPI';
-import { createNotificationForStudent } from 'src/API/notificationAPI';
+import {
+  createNotificationForStudent,
+  createNotificationForSupervisor
+} from 'src/API/notificationAPI';
 import { UserContext } from '../../API/auth';
 
 const StudentEnrollmentListResults = ({ ...props }) => {
@@ -78,7 +81,7 @@ const StudentEnrollmentListResults = ({ ...props }) => {
         text: `deleted your enrollment in course ${enrollmentData.course.name}`,
         avatar: user.avatar
       }
-    });
+    }).then((res) => console.log(res));
     getEnrollmentByStudent(props.id).then((enrollmentsData) => {
       setEnrollment(enrollmentsData.enrollments);
     });
@@ -106,8 +109,17 @@ const StudentEnrollmentListResults = ({ ...props }) => {
       alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
     }
   };
-  const handleCancel = async (id) => {
+  const handleCancel = async (id, courseName) => {
     await deleteEnrollment(id);
+    await createNotificationForSupervisor(user.supervisorId, {
+      data: {
+        title: 'Enrollment cancellation',
+        senderName: ` ${user.fname} ${user.lname}`,
+        text: `cancels his enrollment in course ${courseName} `,
+        subText: 'cancelled',
+        avatar: user.avatar
+      }
+    }).then((res) => console.log(res));
     getEnrollmentByStudent(props.id).then((enrollmentsData) => {
       setEnrollment(enrollmentsData.enrollments);
     });
@@ -277,7 +289,10 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                           color="secondary"
                           variant="outlined"
                           onClick={() => {
-                            handleCancel(enrollmentData.id);
+                            handleCancel(
+                              enrollmentData.id,
+                              enrollmentData.course.name
+                            );
                           }}
                         >
                           Cancel
