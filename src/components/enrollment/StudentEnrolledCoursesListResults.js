@@ -49,7 +49,7 @@ const StudentEnrolledCoursesListResults = ({ ...props }) => {
         setEnrollment(enrollmentsData);
       });
     }
-  }, []);
+  });
 
   const handleApprove = async (enrollmentData, enrollment) => {
     const updatedEnrollment = await UpdateEnrollment(

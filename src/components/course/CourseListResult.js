@@ -80,7 +80,7 @@ const CourseListResults = () => {
                       </Box>
                     </TableCell>
                     <TableCell>{courseData.level}</TableCell>
-                    <TableCell>{courseData.major}</TableCell>
+                    <TableCell>{courseData.major.name}</TableCell>
                     <TableCell>{courseData.credit}</TableCell>
                     <TableCell>
                       <AlertDialog
