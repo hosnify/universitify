@@ -52,14 +52,17 @@ const CourseRegistrationListResults = ({ ...props }) => {
       });
     }
   }, []);
-  useEffect(() => {
+  useEffect(async () => {
     if (user) {
-      getAllCoursesByMajorAndLevel(user.major.code, props.level).then(
-        (coursesData) => setCourses(coursesData)
+      const majorAndGeneralCourses = await getAllCoursesByMajorAndLevel(
+        user.major.code,
+        props.level
       );
-      getAllCoursesByMinorAndLevel(user.minor.code, props.level).then(
-        (coursesData) => setCourses([...courses, ...coursesData])
+      const minorCourses = await getAllCoursesByMinorAndLevel(
+        user.minor.code,
+        props.level
       );
+      setCourses([...majorAndGeneralCourses, ...minorCourses]);
     }
   }, []);
   const isEligble = (loggeduser, inputCourse) =>
@@ -178,7 +181,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
                                 />
                               ) : (
                                 <Chip
-                                  label={`Minor : ${user.minor.name}`}
+                                  label={`Minor : ${courseData.major.name}`}
                                   clickable
                                   color="primary"
                                   variant="outlined"
