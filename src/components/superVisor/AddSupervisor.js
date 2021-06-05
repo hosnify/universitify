@@ -12,7 +12,6 @@ import {
   TextField
 } from '@material-ui/core';
 import { createOne } from 'src/API/superVisorAPI';
-import SettingsPassword from '../settings/SettingsPassword';
 
 const AddSuperVisor = (props) => {
   const [values, setValues] = useState({});
@@ -83,6 +82,28 @@ const AddSuperVisor = (props) => {
                 variant="outlined"
               />
             </Grid>
+            <Grid>
+              <TextField
+                fullWidth
+                label="Password"
+                margin="normal"
+                name="password"
+                onChange={handleChange}
+                type="password"
+                value={values.password}
+                variant="outlined"
+              />
+              <TextField
+                fullWidth
+                label="Confirm password"
+                margin="normal"
+                name="confirm"
+                onChange={handleChange}
+                type="password"
+                value={values.confirm}
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
         </CardContent>
         <Divider />
@@ -103,7 +124,6 @@ const AddSuperVisor = (props) => {
           </Snackbar>
         </Box>
         <Divider />
-        <SettingsPassword />
       </Card>
     </form>
   );

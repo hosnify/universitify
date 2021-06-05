@@ -10,6 +10,7 @@ import {
   Divider,
   FormControlLabel,
   Grid,
+  Link,
   MenuItem,
   Snackbar,
   Switch,
@@ -17,9 +18,11 @@ import {
 } from '@material-ui/core';
 import { createOne, updateCoursePrerequisites } from 'src/API/courseAPI';
 import { getAllMajors } from 'src/API/majorAPI';
+import AlertDialog from '../AlertDialog';
+import AddMajor from '../major/AddMajor';
 
 const AddCourse = (props) => {
-  const [values, setValues] = useState({ minorId: false });
+  const [values, setValues] = useState({ minorId: null });
   const [open, setOpen] = useState(false);
   const [majors, setMajors] = useState([]);
   useEffect(async () => {
@@ -43,7 +46,7 @@ const AddCourse = (props) => {
     console.log(values);
 
     await updateCoursePrerequisites(newCourse.id, {
-      prerequisites: values.prerequisites.split(',')
+      prerequisites: values.prerequisites && values.prerequisites.split(',')
     });
     setOpen(true);
   };
@@ -88,7 +91,13 @@ const AddCourse = (props) => {
                 fullWidth
                 name="majorId"
                 onChange={handleChange}
-                helperText="Please select student major"
+                helperText={
+                  <Link
+                    component={AlertDialog}
+                    buttonText="Add Major"
+                    data={<AddMajor />}
+                  />
+                }
               >
                 {majors.map((majorData) => (
                   <MenuItem key={majorData.id} value={majorData.id}>
