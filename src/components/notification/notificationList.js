@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -50,7 +51,7 @@ function NotificationList({ ...props }) {
                 </Typography>
               }
               secondary={
-                <>
+                <Grid wrap="wrap">
                   <Typography
                     component="span"
                     variant="h5"
@@ -74,7 +75,21 @@ function NotificationList({ ...props }) {
                   >
                     {notification.data.subText}
                   </Typography>
-                </>
+                  <Typography
+                    component="div"
+                    variant="body1"
+                    color={colors.blue[600]}
+                  >
+                    Contact:
+                  </Typography>
+                  <Typography
+                    component="div"
+                    variant="body1"
+                    color="textPrimary"
+                  >
+                    {notification.data.senderEmail}
+                  </Typography>
+                </Grid>
               }
             />
             {notification.status === 0 && (
