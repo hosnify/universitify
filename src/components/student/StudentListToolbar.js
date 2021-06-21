@@ -1,22 +1,17 @@
 /* eslint-disable no-unused-vars */
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon
-} from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { Search as SearchIcon } from 'react-feather';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../API/auth';
 
 const StudentListToolbar = (props) => {
   const navigate = useNavigate();
   const handleAddButton = () => {
     navigate('/app/student/add');
   };
+  const { user } = useContext(UserContext);
+
   return (
     <Box {...props}>
       <Box
@@ -25,10 +20,12 @@ const StudentListToolbar = (props) => {
           justifyContent: 'flex-end'
         }}
       >
-        <Button color="primary" variant="contained" onClick={handleAddButton}>
-          Add New
-          <AddIcon />
-        </Button>
+        {user && user.role === 'coordinator' && (
+          <Button color="primary" variant="contained" onClick={handleAddButton}>
+            Add New
+            <AddIcon />
+          </Button>
+        )}
       </Box>
       {/* <Box sx={{ mt: 3 }}>
       <Card>

@@ -1,18 +1,12 @@
 /* eslint-disable no-unused-vars */
-import {
-  Box,
-  Card,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon,
-  Button
-} from '@material-ui/core';
-import { Search as SearchIcon } from 'react-feather';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../API/auth';
 
-const SuperVisorListToolbar = (props) => {
+const CourseListToolbar = (props) => {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const handleAddButton = () => {
     navigate('/app/course/add');
@@ -25,10 +19,12 @@ const SuperVisorListToolbar = (props) => {
           justifyContent: 'flex-end'
         }}
       >
-        <Button color="primary" variant="contained" onClick={handleAddButton}>
-          Add course
-          <AddIcon />
-        </Button>
+        {user && user.role === 'coordinator' && (
+          <Button color="primary" variant="contained" onClick={handleAddButton}>
+            Add course
+            <AddIcon />
+          </Button>
+        )}
       </Box>
       {/* <Box sx={{ mt: 3 }}>
       <Card>
@@ -56,4 +52,4 @@ const SuperVisorListToolbar = (props) => {
   );
 };
 
-export default SuperVisorListToolbar;
+export default CourseListToolbar;
