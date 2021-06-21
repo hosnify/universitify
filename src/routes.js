@@ -19,6 +19,9 @@ import StudentAccount from './pages/student/StudentAccount';
 import AddStudentPage from './pages/student/AddStudentPage';
 import AddSuperVisorPage from './pages/supervisor/AddSuperVisorPage';
 import StudentEnrolledCourses from './pages/enrollments/StudentEnrolledCourses';
+import CoordinatorList from './pages/coordinator/CoordinatorList';
+import CoordinatorAccount from './pages/coordinator/CoordinatorAccount';
+import AddCoordinatorPage from './pages/coordinator/AddCoordinatorPage';
 
 // isSigned = true;
 const routes = (user) => {
@@ -86,6 +89,19 @@ const routes = (user) => {
           path: 'supervisor/add',
           element: user ? <AddSuperVisorPage /> : <Navigate to="/login" />
         },
+
+        {
+          path: 'coordinator/:id/account',
+          element: user ? <CoordinatorAccount /> : <Navigate to="/login" />
+        },
+        {
+          path: 'coordinators',
+          element: user ? <CoordinatorList /> : <Navigate to="/login" />
+        },
+        {
+          path: 'coordinator/add',
+          element: user ? <AddCoordinatorPage /> : <Navigate to="/login" />
+        },
         {
           path: 'planahead',
           element: user ? <PlanAheadPage /> : <Navigate to="/login" />
@@ -105,9 +121,11 @@ const routes = (user) => {
           element: !user ? (
             <Navigate to="/login" />
           ) : user.role === 'student' ? (
-            <Navigate to="app/student/account" />
+            <Navigate to="app/student/:id/account" />
+          ) : user.role === 'coordinator' ? (
+            <Navigate to="app/coordinator/:id/account" />
           ) : (
-            <Navigate to="app/supervisor/account" />
+            <Navigate to="app/supervisor/:id/account" />
           )
         },
         { path: '*', element: <Navigate to="/login" /> }
