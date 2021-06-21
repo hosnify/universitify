@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   Alert,
   Box,
@@ -12,15 +12,18 @@ import {
   TextField
 } from '@material-ui/core';
 import { createOne } from 'src/API/superVisorAPI';
+import { UserContext } from '../../API/auth';
 
 const AddSuperVisor = (props) => {
   const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      coordinatorId: user.id
     });
   };
 

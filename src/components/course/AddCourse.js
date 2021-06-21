@@ -1,5 +1,6 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-wrap-multilines */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
   Alert,
   Box,
@@ -20,11 +21,20 @@ import { createOne, updateCoursePrerequisites } from 'src/API/courseAPI';
 import { getAllMajors } from 'src/API/majorAPI';
 import AlertDialog from '../AlertDialog';
 import AddMajor from '../major/AddMajor';
+import { UserContext } from '../../API/auth';
 
 const AddCourse = (props) => {
-  const [values, setValues] = useState({ minorId: null });
+  const { user } = useContext(UserContext);
+  const [values, setValues] = useState({ minorId: null, majorId: null });
   const [open, setOpen] = useState(false);
   const [majors, setMajors] = useState([]);
+  const [types] = useState([
+    { id: 'majorElective', name: 'Major Elective' },
+    { id: 'majorRequirment', name: 'Major Requirment' },
+    { id: 'universityRequirment', name: 'University Requirment' },
+    { id: 'facultyRequirment', name: 'Faculty Requirment' }
+  ]);
+
   useEffect(async () => {
     const majorsData = await getAllMajors();
     setMajors(majorsData);
@@ -37,7 +47,9 @@ const AddCourse = (props) => {
       [event.target.name === 'minorId' && event.target.name]: event.target
         .checked
         ? values.majorId
-        : null
+        : null,
+      isElective: values.type === 'majorElective',
+      coordinatorId: user.id
     });
   };
 
@@ -100,6 +112,21 @@ const AddCourse = (props) => {
                 }
               >
                 {majors.map((majorData) => (
+                  <MenuItem key={majorData.id} value={majorData.id}>
+                    {majorData.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                select
+                label="type"
+                fullWidth
+                name="type"
+                onChange={handleChange}
+              >
+                {types.map((majorData) => (
                   <MenuItem key={majorData.id} value={majorData.id}>
                     {majorData.name}
                   </MenuItem>

@@ -1,8 +1,4 @@
-import {
-  useState,
-  // useContext
-  useEffect
-} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {
   Alert,
   Box,
@@ -19,13 +15,14 @@ import {
 import { createOne } from 'src/API/studentAPI';
 import { getAllMajors } from 'src/API/majorAPI';
 import { getAllSuperVisors } from 'src/API/superVisorAPI';
-// import { UserContext } from '../../API/auth';
+import { UserContext } from '../../API/auth';
 
 const AddStudent = (props) => {
   const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
   const [supervisors, setSupervisors] = useState([]);
   const [majors, setMajors] = useState([]);
+  const { user } = useContext(UserContext);
 
   useEffect(async () => {
     const majorsData = await getAllMajors();
@@ -38,7 +35,8 @@ const AddStudent = (props) => {
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      coordinatorId: user.id
     });
   };
   // const handleSelectMajor = (event) => {
