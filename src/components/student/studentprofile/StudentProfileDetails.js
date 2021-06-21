@@ -149,7 +149,6 @@ const StudentProfileDetails = (props) => {
                 InputLabelProps={{
                   shrink: true
                 }}
-                type="number"
                 value={user.GPA}
                 variant="outlined"
               />
