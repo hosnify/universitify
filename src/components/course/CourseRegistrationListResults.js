@@ -33,6 +33,7 @@ import {
   getAllCoursesByMajorAndLevel,
   getAllCoursesByMinorAndLevel
 } from 'src/API/courseAPI';
+import { courseType } from 'src/utils/courseUtils';
 import { getStudent } from 'src/API/studentAPI';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { createNotificationForSupervisor } from 'src/API/notificationAPI';
@@ -79,7 +80,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
   const isPassed = (loggeduser, inputCourse) =>
     loggeduser &&
     user.coursesFinished.some(
-      (course) => course.courseId === inputCourse.id && course.grade > 1.7
+      (course) => course.courseId === inputCourse.id && course.grade > 50
     );
 
   const handleEnroll = async (userId, courseId, courseName) => {
@@ -93,7 +94,8 @@ const CourseRegistrationListResults = ({ ...props }) => {
         senderName: ` ${user.fname} ${user.lname}`,
         text: `requested new registration in course ${courseName} `,
         subText: 'need review',
-        avatar: user.avatar
+        avatar: user.avatar,
+        senderEmail: user.email
       }
     }).then((res) => console.log(res));
     if (user && user.role === 'student') {
@@ -115,7 +117,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
     'Course title',
     'Credit',
     'Eligible',
-    'Course prerequisites',
+    'prerequisites',
     'Enroll'
   ];
 
@@ -133,7 +135,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
             </TableHead>
             <TableBody>
               {courses
-                .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
+                // .slice(page === 0 ? 0 : limit * (page - 1), limit * page)
                 .map(
                   (courseData) =>
                     !(
@@ -173,17 +175,37 @@ const CourseRegistrationListResults = ({ ...props }) => {
                               />
                               {courseData.major &&
                               user.major.code === courseData.major.code ? (
+                                <>
+                                  <Chip
+                                    label={`Major : ${user.major.name}`}
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                  />
+                                  <Chip
+                                    label={`type : ${courseType(
+                                      courseData.type
+                                    )}
+                                    `}
+                                    clickable
+                                    color="default"
+                                    variant="outlined"
+                                  />
+                                </>
+                              ) : courseData.major &&
+                                user.minor.code === courseData.major.code ? (
                                 <Chip
-                                  label={`Major : ${user.major.name}`}
+                                  label={`Minor : ${courseData.major.name}`}
                                   clickable
                                   color="primary"
                                   variant="outlined"
                                 />
                               ) : (
                                 <Chip
-                                  label={`Minor : ${courseData.major.name}`}
+                                  label={`type : ${courseType(courseData.type)}
+                                `}
                                   clickable
-                                  color="primary"
+                                  color="default"
                                   variant="outlined"
                                 />
                               )}
@@ -204,17 +226,37 @@ const CourseRegistrationListResults = ({ ...props }) => {
                               />
                               {courseData.major &&
                               user.major.code === courseData.major.code ? (
+                                <>
+                                  <Chip
+                                    label={`Major : ${user.major.name}`}
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                  />
+                                  <Chip
+                                    label={`type : ${courseType(
+                                      courseData.type
+                                    )}
+                                    `}
+                                    clickable
+                                    color="default"
+                                    variant="outlined"
+                                  />
+                                </>
+                              ) : courseData.major &&
+                                user.minor.code === courseData.major.code ? (
                                 <Chip
-                                  label={`Major : ${user.major.name}`}
+                                  label={`Minor : ${courseData.major.name}`}
                                   clickable
                                   color="primary"
                                   variant="outlined"
                                 />
                               ) : (
                                 <Chip
-                                  label={`Minor : ${user.minor.name}`}
+                                  label={`type : ${courseType(courseData.type)}
+                                `}
                                   clickable
-                                  color="primary"
+                                  color="default"
                                   variant="outlined"
                                 />
                               )}
