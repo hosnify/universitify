@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 // eslint-disable-next-line camelcase
@@ -69,7 +70,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             title: 'Plan Ahead'
           }
         ]
-      : [
+      : user && user.role === 'supervisor'
+      ? [
           {
             href: `/app/supervisor/${user.id}/account`,
             icon: AccountCircleIcon,
@@ -95,16 +97,33 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             icon: SupervisorAccountIcon,
             title: 'Supervisors'
           }
-          // {
-          //   href: '/app/supervisor/add',
-          //   icon: UserIcon,
-          //   title: 'Add Supervisor'
-          // },
-          // {
-          //   href: '/app/student/add',
-          //   icon: UserIcon,
-          //   title: 'Add Student'
-          // }
+        ]
+      : [
+          {
+            href: `/app/coordinator/${user.id}/account`,
+            icon: AccountCircleIcon,
+            title: 'Profile'
+          },
+          {
+            href: '/app/student/add',
+            icon: PeopleAltIcon,
+            title: 'Add Student'
+          },
+          {
+            href: '/app/course/add',
+            icon: CardMembershipIcon,
+            title: 'Add Course'
+          },
+          {
+            href: '/app/supervisor/add',
+            icon: SupervisorAccountIcon,
+            title: 'Add Supervisor'
+          },
+          {
+            href: '/app/coordinator/add',
+            icon: SupervisorAccountIcon,
+            title: 'Add Co-ordinator'
+          }
         ];
   const content = (
     <Box

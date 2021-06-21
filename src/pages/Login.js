@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { getStudent } from 'src/API/studentAPI';
 import { getSuperVisor } from 'src/API/superVisorAPI';
+import { getCoordinator } from 'src/API/coordinatorAPI';
 import { currentUser, login, UserContext } from '../API/auth';
 
 const Login = () => {
@@ -56,11 +57,15 @@ const Login = () => {
                 setUser(currentuser);
                 if (currentuser && currentuser.role === 'student') {
                   await getStudent(currentuser.id).then((userData) => {
-                    setUser({ role: 'student', ...userData });
+                    setUser(userData);
                   });
-                } else {
+                } else if (currentuser && currentuser.role === 'supervisor') {
                   await getSuperVisor(currentuser.id).then((userData) => {
-                    setUser({ role: 'supervisor', ...userData });
+                    setUser(userData);
+                  });
+                } else if (currentuser && currentuser.role === 'coordinator') {
+                  await getCoordinator(currentuser.id).then((userData) => {
+                    setUser(userData);
                   });
                 }
                 navigate(`/app/${currentuser.role}/${currentuser.id}/account`);
