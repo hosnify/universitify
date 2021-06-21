@@ -126,7 +126,7 @@ const StudentEnrolledCoursesListResults = ({ ...props }) => {
     'student ',
     'course  ',
     'last update at',
-    'Supervisor',
+    'Academic Advisor',
     'status',
     user.role === 'supervisor' && 'action'
   ];

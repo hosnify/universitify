@@ -7,7 +7,7 @@ import SuperVisorListResults from 'src/components/superVisor/SuperVisorListResul
 const SupervisorList = () => (
   <>
     <Helmet>
-      <title>supervisors</title>
+      <title>Academic Advisor</title>
     </Helmet>
     <Box
       sx={{

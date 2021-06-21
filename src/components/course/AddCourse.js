@@ -32,7 +32,8 @@ const AddCourse = (props) => {
     { id: 'majorElective', name: 'Major Elective' },
     { id: 'majorRequirment', name: 'Major Requirment' },
     { id: 'universityRequirment', name: 'University Requirment' },
-    { id: 'facultyRequirment', name: 'Faculty Requirment' }
+    { id: 'facultyRequirment', name: 'Faculty Requirment' },
+    { id: 'universityElective', name: 'University Elective' }
   ]);
 
   useEffect(async () => {

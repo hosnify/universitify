@@ -38,7 +38,7 @@ const CoordinatorListResults = () => {
     setPage(newPage);
   };
 
-  const superVisorTableMetaData = ['Id', 'Supervisor name', 'email'];
+  const superVisorTableMetaData = ['Id', 'Academic Advisor name', 'email'];
 
   return (
     <Card>

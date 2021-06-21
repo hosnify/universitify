@@ -95,7 +95,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           {
             href: '/app/supervisors',
             icon: SupervisorAccountIcon,
-            title: 'Supervisors'
+            title: 'Academic Advisor'
           }
         ]
       : [
@@ -117,7 +117,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           {
             href: '/app/supervisor/add',
             icon: SupervisorAccountIcon,
-            title: 'Add Supervisor'
+            title: 'Add Academic Advisor'
           },
           {
             href: '/app/coordinator/add',

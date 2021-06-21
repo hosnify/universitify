@@ -6,5 +6,7 @@ export const courseType = (type) => {
   if (type === 'minorRequirment') return 'Minor Requirment';
   if (type === 'universityRequirment') return 'University Requirment';
   if (type === 'facultyRequirment') return 'Faculty Requirment';
+  if (type === 'universityElective') return 'University Elective';
+
   return 'no type';
 };

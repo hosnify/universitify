@@ -108,7 +108,7 @@ const EnrollmentListResults = () => {
     'student ',
     'course  ',
     'last update at',
-    'Supervisor',
+    'Academic Advisor',
     'status',
     'action'
   ];
@@ -152,7 +152,7 @@ const EnrollmentListResults = () => {
                     <TableCell>
                       {enrollmentData.supervisor
                         ? `DR. ${enrollmentData.supervisor.fname} ${enrollmentData.supervisor.lname}`
-                        : 'No supervisor yet'}
+                        : 'No Academic Advisor yet'}
                     </TableCell>
                     <TableCell>
                       <Chip

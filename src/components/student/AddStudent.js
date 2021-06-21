@@ -144,10 +144,10 @@ const AddStudent = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 select
-                label="supervisor"
+                label="Academic Advisor"
                 name="supervisorId"
                 onChange={handleChange}
-                helperText="Please select student supervisorId"
+                helperText="Please select student Academic Advisor"
               >
                 {supervisors.map((supervisorData) => (
                   <MenuItem key={supervisorData.id} value={supervisorData.id}>

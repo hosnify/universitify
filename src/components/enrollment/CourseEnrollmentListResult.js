@@ -114,7 +114,7 @@ const CourseEnrollmentListResult = (props) => {
     'student ',
     'course  ',
     'last update at',
-    'Supervisor',
+    'Academic Advisor',
     'status',
     'action'
   ];

@@ -21,7 +21,7 @@ const SuperVisorListToolbar = (props) => {
       >
         {user && user.role === 'coordinator' && (
           <Button color="primary" variant="contained" onClick={handleAddButton}>
-            Add supervisor
+            Add Academic Advisor
             <AddIcon />
           </Button>
         )}
