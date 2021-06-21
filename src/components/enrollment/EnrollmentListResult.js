@@ -50,7 +50,8 @@ const EnrollmentListResults = () => {
         senderName: `DR. ${user.fname} ${user.lname}`,
         text: `updated your enrollment in course ${enrollmentData.course.name} `,
         subText: `enrollment current status: ${updatedEnrollment.status}`,
-        avatar: user.avatar
+        avatar: user.avatar,
+        senderEmail: user.email
       }
     }).then((res) => console.log(res));
 
@@ -59,11 +60,8 @@ const EnrollmentListResults = () => {
     );
   };
   const handleAddResult = async (enrollmentData, result) => {
-    const grade = prompt(
-      'Enter Course result (GPA) in number from 0 to 4 : ',
-      'ex. 2.7'
-    );
-    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
+    const grade = prompt('Enter Course result in number from 0 to 100 : ');
+    if (grade !== null && grade !== '' && grade >= 0 && grade <= 100) {
       await EndEnrollment(enrollmentData.id, { ...result, grade });
       await createNotificationForStudent(enrollmentData.student.id, {
         data: {
@@ -71,14 +69,15 @@ const EnrollmentListResults = () => {
           senderName: `DR. ${user.fname} ${user.lname}`,
           text: `added your result in course ${enrollmentData.course.name}`,
           subText: `your result is : ${grade}`,
-          avatar: user.avatar
+          avatar: user.avatar,
+          senderEmail: user.email
         }
       });
       getAllEnrollments().then((enrollmentsData) =>
         setEnrollments(enrollmentsData)
       );
     } else {
-      alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
+      alert('Faild : please enter Course result  in numbers from 0 to 100');
     }
   };
   const handleDelete = async (enrollmentData) => {
@@ -88,7 +87,8 @@ const EnrollmentListResults = () => {
         title: 'enrollment approval',
         senderName: `DR. ${user.fname} ${user.lname}`,
         text: `deleted your enrollment in course ${enrollmentData.course.name}`,
-        avatar: user.avatar
+        avatar: user.avatar,
+        senderEmail: user.email
       }
     });
     getAllEnrollments().then((enrollmentsData) =>

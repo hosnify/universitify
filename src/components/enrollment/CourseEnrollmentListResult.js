@@ -27,6 +27,8 @@ import {
 } from 'src/API/enrollmentAPI';
 import { InfoOutlined } from '@material-ui/icons';
 import { createNotificationForStudent } from 'src/API/notificationAPI';
+import { gpaConverter } from 'src/utils/gpa';
+
 import { UserContext } from '../../API/auth';
 
 const CourseEnrollmentListResult = (props) => {
@@ -52,7 +54,8 @@ const CourseEnrollmentListResult = (props) => {
         senderName: `DR. ${user.fname} ${user.lname}`,
         text: `updated your enrollment in course ${enrollmentData.course.name} `,
         subText: `enrollment current status: ${updatedEnrollment.status}`,
-        avatar: user.avatar
+        avatar: user.avatar,
+        senderEmail: user.email
       }
     });
 
@@ -67,7 +70,8 @@ const CourseEnrollmentListResult = (props) => {
         title: 'enrollment approval',
         senderName: `DR. ${user.fname} ${user.lname}`,
         text: `deleted your enrollment in course ${enrollmentData.course.name}`,
-        avatar: user.avatar
+        avatar: user.avatar,
+        senderEmail: user.email
       }
     });
 
@@ -76,19 +80,17 @@ const CourseEnrollmentListResult = (props) => {
     );
   };
   const handleAddResult = async (enrollmentData, result) => {
-    const grade = prompt(
-      'Enter Course result (GPA) in number from 0 to 4 : ',
-      'ex. 2.7'
-    );
-    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
+    const grade = prompt('Enter Course result  in number from 0 to 100 : ');
+    if (grade !== null && grade !== '' && grade >= 0 && grade <= 100) {
       await EndEnrollment(enrollmentData.id, { ...result, grade });
       await createNotificationForStudent(enrollmentData.student.id, {
         data: {
           title: 'course result',
           senderName: `DR. ${user.fname} ${user.lname}`,
           text: `added your result in course ${enrollmentData.course.name}`,
-          subText: `your result is : ${grade}`,
-          avatar: user.avatar
+          subText: `your result is : ${gpaConverter(grade)}`,
+          avatar: user.avatar,
+          senderEmail: user.email
         }
       });
 
@@ -96,7 +98,7 @@ const CourseEnrollmentListResult = (props) => {
         setEnrollments(enrollmentsData.enrollments)
       );
     } else {
-      alert('Faild : please enter Course result (GPA) in numbers from 0 to 4');
+      alert('Faild : please enter Course result in numbers from 0 to 100');
     }
   };
   const handleLimitChange = (event) => {

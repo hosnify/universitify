@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable indent */
@@ -23,10 +24,8 @@ import {
 import ReportIcon from '@material-ui/icons/Report';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { getCoursesFinishedByStudent } from 'src/API/studentAPI';
-
+import { gpaConverter } from 'src/utils/gpa';
 import { UserContext } from '../../API/auth';
-
-// import getInitials from 'src/utils/getInitials';
 
 const CourseFinishedListResults = ({ ...props }) => {
   const [limit, setLimit] = useState(10);
@@ -55,7 +54,7 @@ const CourseFinishedListResults = ({ ...props }) => {
     'courseCode',
     'Course title',
     'instructor',
-    'grade',
+    'GPA',
     'Result'
   ];
 
@@ -91,10 +90,10 @@ const CourseFinishedListResults = ({ ...props }) => {
                     </TableCell>
 
                     <TableCell>{courseData.instructorName}</TableCell>
-                    <TableCell>{courseData.grade}</TableCell>
+                    <TableCell>{gpaConverter(courseData.grade)}</TableCell>
 
                     <TableCell>
-                      {courseData.grade <= 1 ? (
+                      {gpaConverter(courseData.grade) === 'F' ? (
                         <Chip
                           icon={<ReportIcon />}
                           label="Fail"
