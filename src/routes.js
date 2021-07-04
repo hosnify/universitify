@@ -22,6 +22,10 @@ import StudentEnrolledCourses from './pages/enrollments/StudentEnrolledCourses';
 import CoordinatorList from './pages/coordinator/CoordinatorList';
 import CoordinatorAccount from './pages/coordinator/CoordinatorAccount';
 import AddCoordinatorPage from './pages/coordinator/AddCoordinatorPage';
+import SemesterList from './pages/semester/SemesterList';
+import AddSemesterPage from './pages/semester/AddSemesterPage';
+import StudentSemesterList from './pages/semester/StudentSemesterList';
+import EditStudentPage from './pages/student/EditStudentPage';
 
 // isSigned = true;
 const routes = (user) => {
@@ -68,8 +72,12 @@ const routes = (user) => {
           element: user ? <CourseDetailsPage /> : <Navigate to="/login" />
         },
         {
-          path: 'registration',
+          path: 'semester/:semesterId/registration',
           element: user ? <CourseRegistration /> : <Navigate to="/login" />
+        },
+        {
+          path: '/semesters/registration',
+          element: user ? <StudentSemesterList /> : <Navigate to="/login" />
         },
 
         {
@@ -101,6 +109,18 @@ const routes = (user) => {
         {
           path: 'coordinator/add',
           element: user ? <AddCoordinatorPage /> : <Navigate to="/login" />
+        },
+        {
+          path: 'semesters',
+          element: user ? <SemesterList /> : <Navigate to="/login" />
+        },
+        {
+          path: 'student/:id/edit',
+          element: user ? <EditStudentPage /> : <Navigate to="/login" />
+        },
+        {
+          path: 'semester/add',
+          element: user ? <AddSemesterPage /> : <Navigate to="/login" />
         },
         {
           path: 'planahead',
