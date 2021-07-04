@@ -18,6 +18,7 @@ import {
   TextField
 } from '@material-ui/core';
 import { createOne, updateCoursePrerequisites } from 'src/API/courseAPI';
+import { getAllSuperVisors } from 'src/API/superVisorAPI';
 import { getAllMajors } from 'src/API/majorAPI';
 import AlertDialog from '../AlertDialog';
 import AddMajor from '../major/AddMajor';
@@ -27,6 +28,7 @@ const AddCourse = (props) => {
   const { user } = useContext(UserContext);
   const [values, setValues] = useState({ minorId: null, majorId: null });
   const [open, setOpen] = useState(false);
+  const [instructors, setInstructors] = useState([]);
   const [majors, setMajors] = useState([]);
   const [types] = useState([
     { id: 'majorElective', name: 'Major Elective' },
@@ -35,7 +37,10 @@ const AddCourse = (props) => {
     { id: 'facultyRequirment', name: 'Faculty Requirment' },
     { id: 'universityElective', name: 'University Elective' }
   ]);
-
+  useEffect(async () => {
+    const instructorsData = await getAllSuperVisors();
+    setInstructors(instructorsData);
+  }, []);
   useEffect(async () => {
     const majorsData = await getAllMajors();
     setMajors(majorsData);
@@ -165,6 +170,21 @@ const AddCourse = (props) => {
                 variant="outlined"
                 helperText="ex: MIS86 "
               />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                select
+                label="instructor"
+                name="instructorId"
+                onChange={handleChange}
+                helperText="Please select course instructor"
+              >
+                {instructors.map((instructorData) => (
+                  <MenuItem key={instructorData.id} value={instructorData.id}>
+                    {` DR. ${instructorData.fname} ${instructorData.lname}`}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
