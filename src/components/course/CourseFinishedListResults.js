@@ -54,7 +54,7 @@ const CourseFinishedListResults = ({ ...props }) => {
     'courseCode',
     'Course title',
     'instructor',
-    'GPA',
+    'Grade',
     'Result'
   ];
 

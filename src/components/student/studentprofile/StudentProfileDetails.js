@@ -141,15 +141,15 @@ const StudentProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="GPA"
-                name="GPA"
+                label="CGPA"
+                name="CGPA"
                 InputProps={{
                   readOnly: true
                 }}
                 InputLabelProps={{
                   shrink: true
                 }}
-                value={user.GPA}
+                value={user.numericalGPA.toFixed(2)}
                 variant="outlined"
               />
             </Grid>
@@ -165,7 +165,7 @@ const StudentProfileDetails = (props) => {
                   shrink: true
                 }}
                 type="number"
-                value={user.lastTermGPA}
+                value={user.numericalLastTermGPA.toFixed(2)}
                 variant="outlined"
               />
             </Grid>
