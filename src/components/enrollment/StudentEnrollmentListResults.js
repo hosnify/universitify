@@ -25,16 +25,11 @@ import {
 import { InfoOutlined } from '@material-ui/icons';
 import { getEnrollmentByStudent } from 'src/API/studentAPI';
 
-import {
-  deleteEnrollment,
-  UpdateEnrollment,
-  EndEnrollment
-} from 'src/API/enrollmentAPI';
+import { deleteEnrollment, UpdateEnrollment } from 'src/API/enrollmentAPI';
 import {
   createNotificationForStudent,
   createNotificationForSupervisor
 } from 'src/API/notificationAPI';
-import { gpaConverter } from 'src/utils/gpa';
 import { UserContext } from '../../API/auth';
 
 const StudentEnrollmentListResults = ({ ...props }) => {
@@ -88,27 +83,6 @@ const StudentEnrollmentListResults = ({ ...props }) => {
     getEnrollmentByStudent(props.id).then((enrollmentsData) => {
       setEnrollment(enrollmentsData.enrollments);
     });
-  };
-  const handleAddResult = async (enrollmentData, result) => {
-    const grade = prompt('Enter Course result in number from 0 to 100: ');
-    if (grade !== null && grade !== '' && grade >= 0 && grade <= 4) {
-      await EndEnrollment(enrollmentData.id, { ...result, grade });
-      await createNotificationForStudent(enrollmentData.student.id, {
-        data: {
-          title: 'course result',
-          senderName: `DR. ${user.fname} ${user.lname}`,
-          text: `added your result in course ${enrollmentData.course.name}`,
-          subText: `your result is : ${gpaConverter(grade)}`,
-          avatar: user.avatar,
-          senderEmail: user.email
-        }
-      });
-      getEnrollmentByStudent(props.id).then((enrollmentsData) => {
-        setEnrollment(enrollmentsData.enrollments);
-      });
-    } else {
-      alert('Faild : please enter Course result in numbers from 0 to 100');
-    }
   };
   const handleCancel = async (id, courseName) => {
     await deleteEnrollment(id);
@@ -268,20 +242,6 @@ const StudentEnrollmentListResults = ({ ...props }) => {
                             }}
                           >
                             Unenroll
-                          </Button>
-                          <Button
-                            primary
-                            variant="outlined"
-                            onClick={() => {
-                              handleAddResult(enrollmentData, {
-                                courseId: enrollmentData.course.id,
-                                studentID: enrollmentData.student.id,
-                                semester: 'FALL', // todo
-                                instructorName: 'DR. Ali Ahmed' // TODO
-                              });
-                            }}
-                          >
-                            Add Result
                           </Button>
                         </TableCell>
                       ))
