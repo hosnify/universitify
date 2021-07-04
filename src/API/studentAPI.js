@@ -28,6 +28,16 @@ export const createOne = (student) =>
     body: JSON.stringify(student)
   }).then((res) => res.json());
 
+export const updateStudent = (id, student) =>
+  fetch(`${api}/student/${id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(student)
+  }).then((res) => res.json());
+
 export const updateStudentSupervisor = (id, supervisorid) =>
   fetch(`${api}/student/${id}/supervisor/${supervisorid}`, {
     method: 'PUT',

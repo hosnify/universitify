@@ -1,7 +1,9 @@
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-wrap-multilines */
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -15,7 +17,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
 import { getAllStudents } from 'src/API/studentAPI';
@@ -29,10 +32,13 @@ const StudentListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     getAllStudents().then((studentsData) =>
       setStudents(
-        studentsData.filter((student) => student.supervisorId === user.id)
+        studentsData.filter((student) =>
+          user.role === 'supervisor' ? student.supervisorId === user.id : true
+        )
       )
     );
   }, []);
@@ -44,6 +50,9 @@ const StudentListResults = ({ ...rest }) => {
     setPage(newPage);
   };
 
+  const handleEditStudent = (id) => {
+    navigate(`/app/student/${id}/edit`);
+  };
   const studentTableMetaData = [
     'ID',
     'Student name',
@@ -53,7 +62,7 @@ const StudentListResults = ({ ...rest }) => {
     'Requested CreditHours',
     'Courses finished',
     'Status',
-    'Enrollments'
+    'action'
   ];
 
   return (
@@ -113,25 +122,39 @@ const StudentListResults = ({ ...rest }) => {
                       )}
                     </TableCell>
 
-                    <TableCell>
-                      <AlertDialog
-                        buttonText="Enrollments"
-                        title={
-                          <Typography variant="h3">
-                            {`student name :  ${studentData.fname} ${studentData.lname}`}
-                          </Typography>
-                        }
-                        color="primary"
-                        data={
-                          <Grid>
-                            <StudentEnrollmentListResults id={studentData.id} />
-                            <StudentEnrolledCoursesListResults
-                              id={studentData.id}
-                            />
-                          </Grid>
-                        }
-                      />
-                    </TableCell>
+                    {user.role === 'supervisor' && (
+                      <TableCell>
+                        <AlertDialog
+                          buttonText="Enrollments"
+                          title={
+                            <Typography variant="h3">
+                              {`student name :  ${studentData.fname} ${studentData.lname}`}
+                            </Typography>
+                          }
+                          color="primary"
+                          data={
+                            <Grid>
+                              <StudentEnrollmentListResults
+                                id={studentData.id}
+                              />
+                              <StudentEnrolledCoursesListResults
+                                id={studentData.id}
+                              />
+                            </Grid>
+                          }
+                        />
+                      </TableCell>
+                    )}
+                    {user.role === 'coordinator' && (
+                      <TableCell>
+                        <Button
+                          primary
+                          onClick={() => handleEditStudent(studentData.id)}
+                        >
+                          Edit
+                        </Button>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
             </TableBody>
