@@ -89,7 +89,7 @@ const CourseFinishedListResults = ({ ...props }) => {
                       </Box>
                     </TableCell>
 
-                    <TableCell>{courseData.instructorName}</TableCell>
+                    <TableCell>{`DR. ${courseData.instructor.fname} ${courseData.instructor.lname} `}</TableCell>
                     <TableCell>{gpaConverter(courseData.grade)}</TableCell>
 
                     <TableCell>

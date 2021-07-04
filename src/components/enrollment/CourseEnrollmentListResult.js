@@ -40,7 +40,11 @@ const CourseEnrollmentListResult = (props) => {
   useEffect(() => {
     getAllEnrollmentsByCourseId(props.courseId).then((enrollmentsData) => {
       console.log(enrollmentsData);
-      setEnrollments(enrollmentsData.enrollments);
+      setEnrollments(
+        enrollmentsData.enrollments.filter(
+          (enrollment) => enrollment.status === 'enrolled'
+        )
+      );
     });
   }, []);
   const handleApprove = async (enrollmentData, enrollment) => {
@@ -80,6 +84,7 @@ const CourseEnrollmentListResult = (props) => {
     );
   };
   const handleAddResult = async (enrollmentData, result) => {
+    console.log(result);
     const grade = prompt('Enter Course result  in number from 0 to 100 : ');
     if (grade !== null && grade !== '' && grade >= 0 && grade <= 100) {
       await EndEnrollment(enrollmentData.id, { ...result, grade });
@@ -231,24 +236,12 @@ const CourseEnrollmentListResult = (props) => {
                           primary
                           variant="outlined"
                           onClick={() => {
-                            handleApprove(enrollmentData, {
-                              status: 'in review',
-                              isAproved: false,
-                              supervisorId: user.id
-                            });
-                          }}
-                        >
-                          Unenroll
-                        </Button>
-                        <Button
-                          primary
-                          variant="outlined"
-                          onClick={() => {
                             handleAddResult(enrollmentData, {
                               courseId: enrollmentData.course.id,
                               studentID: enrollmentData.student.id,
-                              semester: 'FALL',
-                              instructorName: 'DR. Ali Ahmed'
+                              semesterId: enrollmentData.semesterId,
+                              credit: enrollmentData.credit,
+                              instructorId: enrollmentData.course.instructorId
                             });
                           }}
                         >

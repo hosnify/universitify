@@ -241,8 +241,9 @@ const EnrollmentListResults = () => {
                             handleAddResult(enrollmentData, {
                               courseId: enrollmentData.course.id,
                               studentID: enrollmentData.student.id,
-                              semester: 'FALL', // todo
-                              instructorName: 'DR. Ali Ahmed' // todo
+                              semesterId: enrollmentData.semesterId,
+                              credit: enrollmentData.credit,
+                              instructorId: enrollmentData.course.instructorId
                             });
                           }}
                         >
