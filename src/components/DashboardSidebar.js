@@ -45,7 +45,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             title: 'Profile'
           },
           {
-            href: '/app/registration',
+            href: '/app/semesters/registration',
             icon: LibraryAddIcon,
             title: 'Registration'
           },
@@ -80,22 +80,22 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           {
             href: '/app/students',
             icon: PeopleAltIcon,
-            title: 'Students'
+            title: 'Review Students'
           },
           {
             href: '/app/courses',
             icon: CardMembershipIcon,
-            title: 'Courses'
+            title: 'Manage Courses'
           },
-          {
-            href: '/app/enrollments',
-            icon: LibraryBooksIcon,
-            title: 'Enrollments'
-          },
+          // {
+          //   href: '/app/enrollments',
+          //   icon: LibraryBooksIcon,
+          //   title: 'Enrollments'
+          // },
           {
             href: '/app/supervisors',
             icon: SupervisorAccountIcon,
-            title: 'Academic Advisor'
+            title: 'Academic Advisors'
           }
         ]
       : [
@@ -104,15 +104,21 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             icon: AccountCircleIcon,
             title: 'Profile'
           },
+
           {
-            href: '/app/student/add',
+            href: '/app/semesters',
             icon: PeopleAltIcon,
-            title: 'Add Student'
+            title: 'Semesters'
+          },
+          {
+            href: '/app/students',
+            icon: PeopleAltIcon,
+            title: 'Students list'
           },
           {
             href: '/app/course/add',
             icon: CardMembershipIcon,
-            title: 'Add Course'
+            title: 'Add Course '
           },
           {
             href: '/app/supervisor/add',
