@@ -89,22 +89,7 @@ const StudentProfileDetails = (props) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Current Semester"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                name="semester"
-                required
-                value={user.semester}
-                variant="outlined"
-              />
-            </Grid>
+
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
@@ -121,23 +106,7 @@ const StudentProfileDetails = (props) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="credits available"
-                name="creditHave"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                type="number"
-                value={user.creditHave}
-                variant="outlined"
-                helperText="for current semester"
-              />
-            </Grid>
+
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
