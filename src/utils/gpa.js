@@ -10,7 +10,7 @@ export const gpaConverter = (grade) => {
   if (grade <= 65 && grade > 60) return 'C';
 
   if (grade <= 60 && grade > 55) return 'C-';
-  if (grade <= 55 && grade > 50) return 'D+';
-  if (grade === 50) return 'D';
+  if (grade <= 55 && grade > 53) return 'D+';
+  if (grade <= 53 && grade >= 50) return 'D';
   if (grade < 50) return 'F';
 };
