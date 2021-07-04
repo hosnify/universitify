@@ -9,6 +9,7 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 import { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   // Avatar,
@@ -46,6 +47,7 @@ const CourseRegistrationListResults = ({ ...props }) => {
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
   const { user, setUser } = useContext(UserContext);
+  const { semesterId } = useParams();
   useEffect(() => {
     if (user && user.role === 'student') {
       getStudent(user.id).then((userData) => {
@@ -56,11 +58,11 @@ const CourseRegistrationListResults = ({ ...props }) => {
   useEffect(async () => {
     if (user) {
       const majorAndGeneralCourses = await getAllCoursesByMajorAndLevel(
-        user.major.code,
+        user.major ? user.major.code : 0,
         props.level
       );
       const minorCourses = await getAllCoursesByMinorAndLevel(
-        user.minor.code,
+        user.minor ? user.minor.code : 0,
         props.level
       );
       setCourses([...majorAndGeneralCourses, ...minorCourses]);
@@ -83,10 +85,12 @@ const CourseRegistrationListResults = ({ ...props }) => {
       (course) => course.courseId === inputCourse.id && course.grade > 50
     );
 
-  const handleEnroll = async (userId, courseId, courseName) => {
+  const handleEnroll = async (userId, courseId, courseName, credit) => {
     await createEnrollment({
       studentID: userId,
-      courseID: courseId
+      courseID: courseId,
+      semesterId,
+      credit
     });
     await createNotificationForSupervisor(user.supervisorId, {
       data: {
@@ -349,8 +353,12 @@ const CourseRegistrationListResults = ({ ...props }) => {
                                     handleEnroll(
                                       user.id,
                                       courseData.id,
-                                      courseData.name
+                                      courseData.name,
+                                      courseData.credit
                                     )
+                                  }
+                                  disabled={
+                                    props.creditHave < courseData.credit
                                   }
                                 >
                                   Enroll

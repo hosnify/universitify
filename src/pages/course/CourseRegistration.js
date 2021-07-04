@@ -10,6 +10,7 @@ import { UserContext } from '../../API/auth';
 
 const CourseRegistration = () => {
   const { user } = useContext(UserContext);
+  const { creditHave } = user.semesters[0];
   return (
     <>
       <Helmet>
@@ -25,12 +26,16 @@ const CourseRegistration = () => {
         {[...Array(user.level).keys()].map((level) => (
           <Container maxWidth={false}>
             <Box sx={{ pt: 3 }}>
-              <CourseRegistrationListToolbar level={level + 1} />
+              <CourseRegistrationListToolbar
+                level={level + 1}
+                creditHave={creditHave}
+              />
             </Box>
             <Box sx={{ pt: 3 }}>
               <CourseRegistrationListResults
                 level={level + 1}
                 key={level + 1}
+                creditHave={creditHave}
               />
             </Box>
           </Container>
