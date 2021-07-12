@@ -1,12 +1,53 @@
-## university registration system
+# university registration system
 
-> this is the react app client for university registration system , in which students can register university moudules , track enrollments , and course result .
+ this is the react app client for university registration system , in which students can register university moudules , track enrollments , and course result .
 
 ## technology stack
 
-> nodeJs - React - MaterialUI - express
+> nodeJs - React - MaterialUI - express - prisma
 
-express server here :
+express server here : https://github.com/hosnify/universtify-server
+
+## Run instructions :
+
+### install dependencies
+
+#### `yarn install`
+
+#### or
+
+`npm install`
+
+### Start app
+
+#### `yarn start`
+
+#### or
+
+`npm start`
+
+## Features :
+
+### as a coordenator you can
+
+- add new semester
+- make registration open for this semester
+- close semester registration
+- start semester itself
+- end semester and releasing grades
+- add new Academic advisors
+- add new student, attach them to the created Academic advisors
+
+### as an academic advisor you can
+
+- accept or reject students enollments
+- add result for student enrolled on your courses
+
+### as a student you can :
+
+enroll in a course while registration is open for a semester
+cancel your enrollment while semester has not started yet.
+show your courses result and get notifications
 
 ## File Structure
 
@@ -114,19 +155,3 @@ university system folder structure
         └── getInitials.js
 ```
 
-## Features :
-
-- system has two main users : students and supervisors
-- student can :
-  1- register & enroll courses
-  2-show result of finished courses
-  3- show his current enrollments status
-  4- show all prerequisites for any course
-  5- student must complete all prerequisites courses before enroll to any course
-  6- edit password
-  -supervisors can :
-  1- add students , courses , or other supervisors
-  2- approve student enrollments .
-  3- add result for student enrollments ( it will be shown as finished courses in student view)
-  4- show enrollments by students or courses
-  5- show all students and courses data
