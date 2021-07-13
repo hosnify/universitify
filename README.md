@@ -73,15 +73,6 @@ university system folder structure
     │   │   ├── courseListToolbar.js
     │   │   ├── CourseRegistrationListResults.js
     │   │   └── courseRegistrationListToolbar.js
-    │   ├── dashboard
-    │   │   ├── Budget.js
-    │   │   ├── LatestOrders.js
-    │   │   ├── LatestProducts.js
-    │   │   ├── Sales.js
-    │   │   ├── TasksProgress.js
-    │   │   ├── TotalCustomers.js
-    │   │   ├── TotalProfit.js
-    │   │   └── TrafficByDevice.js
     │   ├── DashboardLayout.js
     │   ├── DashboardNavbar.js
     │   ├── DashboardSidebar.js
