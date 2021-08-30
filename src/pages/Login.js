@@ -70,6 +70,7 @@ const Login = () => {
                 }
                 navigate(`/app/${currentuser.role}/${currentuser.id}/account`);
               } catch (error) {
+                // eslint-disable-next-line no-alert
                 alert('wrong email or password');
                 console.error(error);
               }

@@ -127,6 +127,7 @@ const SemesterListResults = ({ UpdateSemestersData, semestersData }) => {
               variant="outlined"
               onClick={async () => {
                 const res = await startSemester(id);
+                // eslint-disable-next-line no-alert
                 if (res.error) alert(res.error);
                 UpdateSemestersData();
               }}
@@ -143,6 +144,7 @@ const SemesterListResults = ({ UpdateSemestersData, semestersData }) => {
           variant="outlined"
           onClick={async () => {
             const res = await endSemester(id);
+            // eslint-disable-next-line no-alert
             if (res.error) alert(res.error);
             UpdateSemestersData();
           }}
